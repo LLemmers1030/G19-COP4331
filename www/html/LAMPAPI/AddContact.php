@@ -2,13 +2,14 @@
 
 	$inData = getRequestInfo();
 	
-	// Retrival variables
+	// Insert variables
 	$adderID = $inData["AdderID"];
 	$firstName = $inData["FirstName"];
 	$lastName = $inData["LastName"];
 	$email = $inData["Email"];
 	$phone = $inData["Phone"];
 	
+
 	$conn = new mysqli("localhost", "Jonin", "shuriken", "COP4331");
 	if ($conn->connect_error) 
 	{
@@ -21,7 +22,7 @@
 		//$stmt->bind_param("ss", $email, $password);
 		//$stmt->execute();
 
-		$sql = "insert into Contacts (AdderID,FirstName,LastName,Email,Phone) VALUES (" . $adderID . ",'" . $firstName . "','" . $lastName . "','" . $email . "','" . $phone . "')";
+		$sql = "INSERT into Contacts (AdderID,FirstName,LastName,Email,Phone) VALUES (" . $adderID . ",'" . $firstName . "','" . $lastName . "','" . $email . "','" . $phone . "')";
 		if( $result = $conn->query($sql) != TRUE )
 		{
 			returnWithError( $conn->error );
