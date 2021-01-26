@@ -4,7 +4,7 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 	<title> Poop Ninjas </title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="icon" href="ninja.png">
 </head>
 
@@ -24,19 +24,20 @@
 		<form>
 			<div class="form-group">
 				<label for="exampleInputEmail1">Username</label>
-				<input type="email" class="form-control" id="exampleInputUsername1" aria-describedby="emailHelp"
+				<input type="email" class="form-control" id="loginUsername" aria-describedby="emailHelp"
 					placeholder="Username">
 			</div>
 			<div class="form-group">
 				<label for="exampleInputPassword1">Password</label>
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+				<input type="password" class="form-control" id="loginPassword" placeholder="Password">
 			</div>
 		</form>
 
 		<div class="d-grid gap-2">
-			<button type="submit" class="btn btn-primary" onClick="login();">Login</button>
+			<button type="submit" class="btn btn-primary" onClick="doLogin();">Login</button>
 			<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">New
 				user?</button>
+			<span id="loginResult"></span>
 		</div>
 
 	</div>
@@ -116,7 +117,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
 		integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
 		crossorigin="anonymous"></script>
-	<script src="js/script.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/md5.js"></script>
 </body>
 
 </html>
