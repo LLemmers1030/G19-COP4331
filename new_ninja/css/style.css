@@ -1,0 +1,150 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url(/images/mountains.jpg) no-repeat center center fixed;
+  background-size: cover;
+  background-position: center;
+  font-family: sans-serif;
+  /* Below is for ying yang */
+  display: flex;
+  justify-content: center;
+}
+
+.loginbox {
+  width: 320px;
+  height: 420px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 80px 30px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 22px;
+}
+
+.loginbox p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+.loginbox input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.loginbox input[type="text"],
+input[type="password-diff"] {
+  border: none;
+  border-bottom: 1px solid #fff;
+  background: transparent;
+  outline: none;
+  height: 40px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.btn-link {
+  color: #ffffff;
+}
+
+#yin-yang {
+  width: 96px;
+  box-sizing: content-box;
+  height: 48px;
+  background: #eee;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px 2px 50px 2px;
+  border-radius: 100%;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+  animation: roll 40000s infinite;
+}
+#yin-yang:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background: #eee;
+  border: 18px solid black;
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
+  box-sizing: content-box;
+}
+#yin-yang:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: black;
+  border: 18px solid #eee;
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
+  box-sizing: content-box;
+}
+
+/*.yinyang {
+  position: relative;
+  background: #fff;
+  height: 100px;
+  border-color: #000;
+  border-style: solid;
+  width: 100px;
+  border-width: 2px 50px 2px 2px;
+  border-radius: 50%;
+  animation: roll 40000s infinite;
+}
+
+.yinyang:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  background: #fff;
+  border: 18px solid #000;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.yinyang:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #000;
+  border: 18px solid #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}*/
+
+@keyframes roll {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(3600000deg);
+  }
+}
+
