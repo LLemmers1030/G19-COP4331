@@ -5,6 +5,9 @@ body {
   background-size: cover;
   background-position: center;
   font-family: sans-serif;
+  /* Below is for ying yang */
+  display: flex;
+  justify-content: center;
 }
 
 .loginbox {
@@ -17,8 +20,7 @@ body {
   position: absolute;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
-  padding: 70px 30px;
-  /* border-radius: 25px; */
+  padding: 80px 30px;
 }
 
 .avatar {
@@ -48,7 +50,7 @@ h1 {
 }
 
 .loginbox input[type="text"],
-input[type="password"] {
+input[type="password-diff"] {
   border: none;
   border-bottom: 1px solid #fff;
   background: transparent;
@@ -58,30 +60,90 @@ input[type="password"] {
   font-size: 16px;
 }
 
-.login {
-  border: none;
-  outline: none;
-  height: 40px;
-  width: 250px;
-  background: #ec4c4c;
-  color: #fff;
-  font-size: 18px;
-  border-radius: 20px;
+.btn-link {
+  color: #ffffff;
 }
 
-.login:hover {
-  cursor: pointer;
-  background: darkorange;
-  color: #000;
+#yin-yang {
+  width: 96px;
+  box-sizing: content-box;
+  height: 48px;
+  background: #eee;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px 2px 50px 2px;
+  border-radius: 100%;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);
+  animation: roll 40000s infinite;
+}
+#yin-yang:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background: #eee;
+  border: 18px solid black;
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
+  box-sizing: content-box;
+}
+#yin-yang:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: black;
+  border: 18px solid #eee;
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
+  box-sizing: content-box;
 }
 
-.loginbox a {
-  text-emphasis: none;
-  font-size: 12px;
-  line-height: 20px;
-  color: darkgray;
+/*.yinyang {
+  position: relative;
+  background: #fff;
+  height: 100px;
+  border-color: #000;
+  border-style: solid;
+  width: 100px;
+  border-width: 2px 50px 2px 2px;
+  border-radius: 50%;
+  animation: roll 40000s infinite;
 }
 
-.loginbox a:hover {
-  color: #ffc107;
+.yinyang:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  background: #fff;
+  border: 18px solid #000;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.yinyang:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: #000;
+  border: 18px solid #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}*/
+
+@keyframes roll {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(3600000deg);
+  }
 }
