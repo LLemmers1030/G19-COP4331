@@ -2,51 +2,62 @@
 
 	$inData = getRequestInfo();
 	
-	// Insert variables
-	$adderID = $inData["AdderID"];
-	$firstName = $inData["FirstName"];
-	$lastName = $inData["LastName"];
-	$email = $inData["Email"];
-	$phone = $inData["Phone"];
+	// Input variables
+	$adderID = $inData['AdderID'];
+	$firstName = $inData['FirstName'];
+	$lastName = $inData['LastName'];
+	$email = $inData['Email'];
+	$phone = $inData['Phone'];
+
+	// Return variables
+	$err = NULL;
 	
 
-	$conn = new mysqli("localhost", "Jonin", "shuriken", "COP4331");
+	$conn = new mysqli('localhost', 'Jonin', 'shuriken', 'COP4331');
 	if ($conn->connect_error) 
 	{
-		returnWithError( $conn->connect_error );
+		returnError($conn->connect_error);
 	} 
 	else
 	{
-		//$sql = "INSERT INTO users (email, password) VALUES (?,?)";
-		//$stmt= $conn->prepare($sql);
-		//$stmt->bind_param("ss", $email, $password);
-		//$stmt->execute();
+		$sql = "
+			INSERT INTO	Contacts
+						(AdderID,
+						FirstName,
+						LastName,
+						Email,
+						Phone)
+			VALUES (?, ?, ?, ?, ?)
+			";
+		$stmt = $conn->prepare($sql);
+		$stmt->bind_param('issss', $adderID, $firstName, $lastName, $email, $phone);
+		$stmt->execute();
+		$result = $stmt->get_result();
 
-		$sql = "INSERT into Contacts (AdderID,FirstName,LastName,Email,Phone) VALUES (" . $adderID . ",'" . $firstName . "','" . $lastName . "','" . $email . "','" . $phone . "')";
-		if( $result = $conn->query($sql) != TRUE )
+		if($result = $conn->query($sql) != TRUE )
 		{
-			returnWithError( $conn->error );
+			returnError($conn->error);
 		}
 		$conn->close();
 	}
+	returnError('');
 	
-	returnWithError("");
-	
+
 	function getRequestInfo()
 	{
 		return json_decode(file_get_contents('php://input'), true);
 	}
 
-	function sendResultInfoAsJson( $obj )
+	function returnError($err)
+	{
+		$rtrn = ['error' => $err];
+		sendJson($rtrn);
+	}
+
+	function sendJson( $obj )
 	{
 		header('Content-type: application/json');
-		echo $obj;
-	}
-	
-	function returnWithError( $err )
-	{
-		$retValue = '{"error":"' . $err . '"}';
-		sendResultInfoAsJson( $retValue );
+		echo(json_encode($obj));
 	}
 	
 ?>
