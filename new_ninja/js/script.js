@@ -16,39 +16,40 @@ function doLogin() {
 
 	var login = document.getElementById("loginUsername").value;
 	var password = document.getElementById("loginPassword").value;
-	var hash = md5(password);
+	//var hash = md5(password);
 
 	document.getElementById("loginResult").innerHTML = "";
 
-	//var jsonPayload = '{"Login" : "' + login + '", "Password" : "' + password + '"}';
-	var jsonPayload = '{"Login" : "' + login + '", "Password" : "' + hash + '"}';
-	var url = urlBase + '/Login.' + extension;;
+	var jsonPayload = '{"Login" : "' + login + '", "Password" : "' + password + '"}';
+	//var jsonPayload = '{"Login" : "' + login + '", "Password" : "' + hash + '"}';
+	var url = urlBase + '/Login.' + extension;
+	
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: jsonPayload
+	}).then(res => {
+		return res.json()
+	  })
+	  .then(data => {
+		userId = data.id;
 
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	try {
-		xhr.onreadystatechange = function () {
-			if (this.readyState == 4 && this.status == 200) {
-				var jsonObject = JSON.parse(xhr.responseText);
-				userId = jsonObject.id;
+		if (userId < 1 || userId == null) {
+			document.getElementById("loginResult").innerHTML = "Invalid User/Password combination";
+			return;
+		}
 
-				if (userId < 1) {
-					document.getElementById("loginResult").innerHTML = "Ivalid User/Password combination";
-					return;
-				}
+		firstName = data.firstName;
+		lastName = data.lastName;
 
-				firstName = jsonObject.firstName;
-				lastName = jsonObject.lastName;
+		//saveCookie();
 
-				//saveCookie();
-
-				window.location.href = "search.html";
-			}
-		};
-		xhr.send(jsonPayload);
-	}
-	catch (err) {
+		window.location.href = "search.html";
+		console.log(data)
+	  })
+	  .catch((err) => {
 		document.getElementById("loginResult").innerHTML = err.message;
-	}
+	  });
 }
