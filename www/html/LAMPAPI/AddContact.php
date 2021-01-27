@@ -20,6 +20,7 @@
 	} 
 	else
 	{
+		// Prepare sql statement
 		$sql = "
 			INSERT INTO	Contacts
 						(AdderID,
@@ -32,16 +33,11 @@
 		$stmt = $conn->prepare($sql);
 		$stmt->bind_param('issss', $adderID, $firstName, $lastName, $email, $phone);
 		$stmt->execute();
-		$result = $stmt->get_result();
 
-		if($result = $conn->query($sql) != TRUE )
-		{
-			returnError($conn->error);
-		}
+		returnError(NULL);
 		$conn->close();
 	}
-	returnError('');
-	
+
 
 	function getRequestInfo()
 	{
@@ -54,7 +50,7 @@
 		sendJson($rtrn);
 	}
 
-	function sendJson( $obj )
+	function sendJson($obj)
 	{
 		header('Content-type: application/json');
 		echo(json_encode($obj));

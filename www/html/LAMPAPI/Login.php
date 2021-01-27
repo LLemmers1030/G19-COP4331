@@ -52,6 +52,7 @@
 		{
 			returnError($rtrn, 'No Records Found');
 		}
+		
 		$conn->close();
 	}
 	
