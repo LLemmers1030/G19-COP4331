@@ -10,31 +10,57 @@
 </head>
 
 <body>
-    <section class="searchbox rounded mx-auto">
+
+    <div class="searchbox rounded mx-auto">
+
         <div class="d-flex mb-5 justify-content-center">
             <h3 data-text="Who are you looking for?"><span>Who are you looking for?</span></h3>
         </div>
-        <div class="input-group rounded mx-auto" style="width: 22rem;">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-user-ninja"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Search</a>
-                    <a class="dropdown-item" href="#">Update</a>
-                    <a class="dropdown-item" href="#">Remove</a>
+
+        <div class="input-group rounded justify-content-center" style="width: 55rem;">
+
+
+            <div class="col-md-auto">
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user-ninja"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Search</a>
+                        <a class="dropdown-item" href="#">Update</a>
+                        <a class="dropdown-item" href="#">Remove</a>
+                    </div>
                 </div>
+
             </div>
-            <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                aria-describedby="search-addon" />
-            <button id="search-button" type="button" class="btn btn-primary">
-                <i class="fas fa-search"></i>
-            </button>
+
+            <div class="col-md-auto">
+
+                <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                    aria-describedby="search-addon" />
+
+            </div>
+
+
+            <a class="btn-slice " href="#">
+                <div class="top"><span>Search</span></div>
+                <div class="bottom"><span>Search</span></div>
+            </a>
+
+
         </div>
-    </section>
+
+    </div>
 
 
+
+
+
+    </div>
+
+    <!-- Bootstrap Integration -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
@@ -44,8 +70,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
         integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
         crossorigin="anonymous"></script>
+
+    <!-- For our javascript files on the server -->
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/md5.js"></script>
+
+    <!-- Fix for dropdown -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
