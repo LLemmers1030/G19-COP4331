@@ -33,8 +33,8 @@
 		$stmt = $conn->prepare($sql);
 		$stmt->bind_param('issss', $adderID, $firstName, $lastName, $email, $phone);
 		$stmt->execute();
-
-		returnError(NULL);
+		// No need to check the return value after execute when inserting
+		returnError($err);
 		$conn->close();
 	}
 
