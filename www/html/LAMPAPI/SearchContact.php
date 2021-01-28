@@ -13,7 +13,7 @@
 		// lastName
 		// email
 		// phone
-		$err = NULL;
+		// error
 
 
 	$conn = new mysqli('localhost', 'Jonin', 'shuriken', 'COP4331');
@@ -38,11 +38,13 @@
 		$stmt->bind_param('sss', $adderID, $search, $search);
 		$stmt->execute();
 		$result = $stmt->get_result();
-		// Get all results and count them
-		$searchResults = $result->fetch_all(MYSQLI_ASSOC);
-		$searchCount = count($searchResults);
 
-		returnInfo($searchCount, $searchResults);
+		// Get all results and remove duplicates
+		// Ex: first and last name both contain the same substring
+		$searchResults = $result->fetch_all(MYSQLI_ASSOC);
+		$filteredResults = array_unique($searchResults);
+
+		returnInfo($filteredResults);
 		$conn->close();
 	}
 
@@ -58,13 +60,15 @@
 		sendJson($rtrn);
 	}
 	
-	function returnInfo($searchCount, $searchResults)
+	function returnInfo($searchResults)
 	{
+		// Count results and package json
+		$searchCount = count($searchResults);
 		$rtrn = 
 			[
 			'count' => $searchCount,
 			'results' => $searchResults,
-			'error' => $err
+			'error' => NULL
 			];
 		sendJson($rtrn);
 	}
