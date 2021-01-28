@@ -8,10 +8,10 @@
 
 	// Return variables
 	$rtrn = [];
-		//id
-		//firstName
-		//lastName
-		$err = NULL;
+		// id
+		// firstName
+		// lastName
+		// error
 	
 
 	$conn = new mysqli('localhost', 'Jonin', 'shuriken', 'COP4331');
@@ -35,6 +35,7 @@
 		$stmt->execute();
 		$result = $stmt->get_result();
 
+		// Get result
 		if ($result->num_rows > 0)
 		{
 			$row = $result->fetch_assoc();
@@ -43,15 +44,12 @@
 				'id' => $row['ID'],
 				'firstName' => $row['FirstName'],
 				'lastName' => $row['LastName'],
-				'error' => ''
+				'error' => NULL
 				];
-
-			returnError($rtrn, $err);
+			returnInfo($rtrn);
 		}
 		else
-		{
-			returnError($rtrn, 'No Records Found');
-		}
+			returnError('No Records Found');
 		
 		$conn->close();
 	}
@@ -62,9 +60,13 @@
 		return json_decode(file_get_contents('php://input'), true);
 	}
 	
-	function returnError($rtrn, $err)
+	function returnError($err)
 	{
-		$rtrn = array_merge($rtrn, array('error' => $err));
+		sendJson($err);
+	}
+
+	function returnInfo($rtrn)
+	{
 		sendJson($rtrn);
 	}
 

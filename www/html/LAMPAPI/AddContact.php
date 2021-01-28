@@ -10,7 +10,7 @@
 	$phone = $inData['Phone'];
 
 	// Return variables
-	$err = NULL;
+		// error
 	
 
 	$conn = new mysqli('localhost', 'Jonin', 'shuriken', 'COP4331');
@@ -34,7 +34,8 @@
 		$stmt->bind_param('issss', $adderID, $firstName, $lastName, $email, $phone);
 		$stmt->execute();
 		// No need to check the return value after execute when inserting
-		returnError($err);
+
+		returnError(NULL);
 		$conn->close();
 	}
 
