@@ -28,7 +28,8 @@
 			SELECT	FirstName,
 					LastName,
 					Email,
-					Phone
+					Phone,
+					ID
 			FROM	Contacts
 			WHERE	AdderID	= ?
 				AND	(FirstName LIKE ?
@@ -42,9 +43,9 @@
 		// Get all results and remove duplicates
 		// Ex: first and last name both contain the same substring
 		$searchResults = $result->fetch_all(MYSQLI_ASSOC);
-		$filteredResults = array_unique($searchResults);
+		//$filteredResults = array_unique($searchResults, SORT_REGULAR);
 
-		returnInfo($filteredResults);
+		returnInfo($searchResults);
 		$conn->close();
 	}
 

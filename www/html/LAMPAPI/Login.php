@@ -62,7 +62,8 @@
 	
 	function returnError($err)
 	{
-		sendJson($err);
+		$rtrn = ['error' => $err];
+		sendJson($rtrn);
 	}
 
 	function returnInfo($rtrn)
