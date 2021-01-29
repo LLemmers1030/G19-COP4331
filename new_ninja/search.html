@@ -7,13 +7,19 @@
     <link rel="stylesheet" type="text/css" href="css/search.css">
     <script src="https://kit.fontawesome.com/fb0100841b.js" crossorigin="anonymous"></script>
     <title>Contact Manager</title>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            readCookie();
+        }, false);
+    </script>
 </head>
 
 <body>
     <div class="me-3 mt-3">
         <div class="float-end">
             <button id="search-button" type="button" class="btn btn-dark" onclick="doLogout();">
-                <i class="fas fa-sign-out-alt"> Logout</i>
+                <i class="fas fa-sign-out-alt" id="userName"></i>
             </button>
         </div>
     </div>

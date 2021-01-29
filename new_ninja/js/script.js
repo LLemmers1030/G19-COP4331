@@ -7,7 +7,7 @@ var userId = 0;
 var firstName = "";
 var lastName = "";
 
-function doLogin() {
+function doLogin() { // working
 
 	userId = 0;
 	firstName = "";
@@ -43,25 +43,57 @@ function doLogin() {
 		firstName = data.firstName;
 		lastName = data.lastName;
 
-		//saveCookie();
+		saveCookie();
 
 		window.location.href = "search.html";
-		//console.log(data)
 	  })
 	  .catch((err) => {
 		document.getElementById("loginResult").innerHTML = err.message;
 	  });
 }
 
-function doLogout() {
+function saveCookie() { // working
+	var minutes = 20;
+	var date = new Date();
+	date.setTime(date.getTime()+(minutes*60*1000));	
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+}
+
+function readCookie() { // working 
+	userId = -1;
+	var data = document.cookie;
+	var splits = data.split(",");
+	for (var i = 0; i < splits.length; i++) {
+		var thisOne = splits[i].trim();
+		var tokens = thisOne.split("=");
+		if( tokens[0] == "firstName" ) {
+			firstName = tokens[1];
+		}
+		else if( tokens[0] == "lastName" ) {
+			lastName = tokens[1];
+		}
+		else if( tokens[0] == "userId" ) {
+			userId = parseInt( tokens[1].trim() );
+		}
+	}
+	
+	if ( userId < 0 ) {
+		window.location.href = "index.html";
+	}
+	else {
+		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+	}
+}
+
+function doLogout() { // working
 	userId = 0;
 	firstName = "";
 	lastName = "";
-
+	document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 	window.location.href = "index.html";
 }
 
-function doRegister() {
+function doRegister() { // not implemented
 
 	userId = 0;
 	firstName = "";
@@ -101,7 +133,7 @@ function doRegister() {
 		firstName = data.firstName;
 		lastName = data.lastName;
 
-		//saveCookie();
+		saveCookie();
 
 		window.location.href = "search.html";
 		//console.log(data)
@@ -111,7 +143,7 @@ function doRegister() {
 	  });
 }
 
-function addContact() { // needs IDs and span in search.html
+function addContact() { // not implemented
 
 	var first = document.getElementById("addFirst").value;
 	var last = document.getElementById("addLast").value;
@@ -141,8 +173,6 @@ function addContact() { // needs IDs and span in search.html
 			return;
 		}
 
-		//saveCookie();
-
 		//window.location.href = "search.html";
 		//console.log(data)
 	  })
@@ -151,14 +181,13 @@ function addContact() { // needs IDs and span in search.html
 	  });
 }
 
-function searchContact() { // needs IDs and span in search.html
+function searchContact() { // working
 
 	var search = document.getElementById("searchInput").value;
 
 	document.getElementById("searchResult").innerHTML = "";
 
 	var jsonPayload = '{"AdderID" : "' + userId + '", "Search" : "' + search + '"}';
-
 	var url = urlBase + '/SearchContact.' + extension;
 	
 	fetch(url, {
@@ -182,8 +211,8 @@ function searchContact() { // needs IDs and span in search.html
 
 		// header titles
 		var col = [];
-		for (var i = 0; i < data.length; i++) {
-			for (var key in data[i]) {
+		for (var i = 0; i < numContacts; i++) {
+			for (var key in data.results[i]) {
 				if (col.indexOf(key) == -1) {
 					col.push(key);
 				}
@@ -195,7 +224,6 @@ function searchContact() { // needs IDs and span in search.html
 
 		// create header row from titles
 		var tr = table.insertRow(-1);
-
 		for (var i = 0; i < col.length; i++) {
 			var th = document.createElement("th");
 			th.innerHTML = col[i];
@@ -203,11 +231,11 @@ function searchContact() { // needs IDs and span in search.html
 		}
 
 		// add JSON data to table
-		for (var i = 0; i < data.length; i++) {
-			tr.insertRow(-1);
+		for (var i = 0; i < numContacts; i++) {
+			tr = table.insertRow(-1);
 			for (var j = 0; j < col.length; j++) {
 				var tabCell = tr.insertCell(-1);
-				tabCell.innerHTML = data[i][col[j]];
+				tabCell.innerHTML = data.results[i][col[j]];
 			}
 		}
 
@@ -216,10 +244,6 @@ function searchContact() { // needs IDs and span in search.html
 		divContainer.innerHTML = "";
 		divContainer.appendChild(table);
 
-		//saveCookie();
-
-		//window.location.href = "search.html";
-		//console.log(data)
 	  })
 	  .catch((err) => {
 		document.getElementById("searchResult").innerHTML = err.message;
