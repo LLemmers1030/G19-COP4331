@@ -143,7 +143,7 @@ function doRegister() { // not implemented
 	  });
 }
 
-function addContact() { // not implemented
+function addContact() { // working
 
 	var first = document.getElementById("addFirst").value;
 	var last = document.getElementById("addLast").value;
@@ -152,7 +152,7 @@ function addContact() { // not implemented
 
 	document.getElementById("addResult").innerHTML = "";
 
-	var jsonPayload = '{"ID" : "' + userId + '", "FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '"}';
+	var jsonPayload = '{"AdderID" : "' + userId + '", "FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '"}';
 
 	var url = urlBase + '/AddContact.' + extension;
 	
@@ -166,15 +166,21 @@ function addContact() { // not implemented
 		return res.json()
 	  })
 	  .then(data => {
-		contactId = data.id; // ?
+		  // can we return contact ID as well ?
+		addContactErr = data.err; 
 
-		if (contactId < 1 || contactId == null) {
+		if (addContactErr == null) {
+			document.getElementById("addResult").innerHTML = "Contact was successfully added";
+		}
+		else {
 			document.getElementById("addResult").innerHTML = "Contact was not added";
 			return;
 		}
 
+		// do we want to give option to add more contacts instead?
+		// so user doesn't have to keep clicking add user button after page refresh
 		//window.location.href = "search.html";
-		//console.log(data)
+
 	  })
 	  .catch((err) => {
 		document.getElementById("addResult").innerHTML = err.message;
