@@ -225,6 +225,10 @@ function searchContact() { // working
 			}
 		}
 
+		// extra column titles (maybe just use "" ?? )
+		col.push("Edit");
+		col.push("Remove");
+
 		// create dynamic table
 		var table = document.createElement("table");
 
@@ -240,8 +244,33 @@ function searchContact() { // working
 		for (var i = 0; i < numContacts; i++) {
 			tr = table.insertRow(-1);
 			for (var j = 0; j < col.length; j++) {
-				var tabCell = tr.insertCell(-1);
-				tabCell.innerHTML = data.results[i][col[j]];
+				if (j == col.length - 1) { // remove button
+					var tabCell = tr.insertCell(-1);
+					var rmBtn = document.createElement('button');
+					rmBtn.type = "button";
+					rmBtn.className = "btn btn-primary";
+					rmBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+					//rmBtn.innerHTML = '<i class="fas fa-user-times"></i>';
+					rmBtn.onclick = function() {
+						window.location.href = "https://youtube.com"; // change to removeContact();
+					}
+					tabCell.appendChild(rmBtn);
+				}
+				else if (j == col.length - 2) { // edit button
+					var tabCell = tr.insertCell(-1);
+					var editBtn = document.createElement('button');
+					editBtn.type = "button";
+					editBtn.className = "btn btn-primary";
+					editBtn.innerHTML = '<i class="fas fa-user-edit"></i>';
+					editBtn.onclick = function() {
+						window.location.href = "https://youtube.com"; // change to editContact();
+					}
+					tabCell.appendChild(editBtn);
+				}
+				else {
+					var tabCell = tr.insertCell(-1);
+					tabCell.innerHTML = data.results[i][col[j]];
+				}
 			}
 		}
 
