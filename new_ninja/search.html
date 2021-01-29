@@ -7,50 +7,59 @@
     <link rel="stylesheet" type="text/css" href="css/search.css">
     <script src="https://kit.fontawesome.com/fb0100841b.js" crossorigin="anonymous"></script>
     <title>Contact Manager</title>
+
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            readCookie();
+        }, false);
+    </script>
 </head>
 
 <body>
+    <div class="me-3 mt-3">
+        <div class="float-end">
+            <button id="search-button" type="button" class="btn btn-dark" onclick="doLogout();">
+                <i class="fas fa-sign-out-alt" id="userName"></i>
+            </button>
+        </div>
+    </div>
 
-    <div class="searchbox rounded mx-auto">
-
-        <div class="d-flex mb-5 justify-content-center">
+    <section class="searchbox rounded mx-auto">
+        <div class="d-flex justify-content-center spliceText">
             <h3 data-text="Who are you looking for?"><span>Who are you looking for?</span></h3>
         </div>
-
-        <div class="input-group rounded justify-content-center" style="width: 55rem;">
-
-
+        <div class="input-group justify-content-center rounded mx-auto" style="width: 55rem;">
             <div class="col-md-auto">
-
                 <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle " type="button" id="dropdownMenuButton"
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-ninja"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Search</a>
-                        <a class="dropdown-item" href="#">Update</a>
-                        <a class="dropdown-item" href="#">Remove</a>
+                        <a class="dropdown-item" href="#">First Name</a>
+                        <a class="dropdown-item" href="#">Last Name</a>
                     </div>
                 </div>
-
             </div>
-
             <div class="col-md-auto">
                 <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                    aria-describedby="search-addon" />
+                    aria-describedby="search-addon" id="searchInput" />
             </div>
-
             <div class="col-md-auto">
-                <button id="search-button" type="button" class="btn btn-primary">
+                <button id="search-button" type="button" class="btn btn-primary" onclick="searchContact();">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
-
         </div>
+        <span id="searchResult"></span>
+        <p id="showData"></p>
+        <div class="d-flex mt-1 justify-content-center">
+            <button id="search-button" type="button" class="btn btn-primary">
+                <i class="fas fa-user-ninja"> Add User</i>
+            </button>
+        </div>
+    </section>
 
-
-    </div>
 
     <!-- Bootstrap Integration -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"

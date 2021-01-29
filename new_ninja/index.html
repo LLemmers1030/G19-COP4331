@@ -31,14 +31,20 @@
 				<label for="exampleInputPassword1">Password</label>
 				<input type="password" class="form-control" id="loginPassword" placeholder="Password">
 			</div>
+
+
+
+			<div class="d-grid gap-2">
+						<button name="submit" type ="submit" formnovalidate class="btn btn-primary" onClick="doLogin();">Login</button>
+						<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">New
+							user?</button>
+						<span id="loginResult"></span>
+					</div>
+
+
 		</form>
 
-		<div class="d-grid gap-2">
-			<button type="submit" class="btn btn-primary" onClick="doLogin();">Login</button>
-			<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">New
-				user?</button>
-			<span id="loginResult"></span>
-		</div>
+		
 
 	</div>
 
