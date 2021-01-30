@@ -232,7 +232,10 @@ function searchContact() { // working
 		// create dynamic table
 		var table = document.createElement("table");
 		table.className = "table table-dark table-striped";
+// <<<<<<< HEAD
    
+// =======
+// >>>>>>> 9d0254f104ec520781d28661ed82b590dd68e46e
 
 		// create header row from titles
 		var tr = table.insertRow(-1);
@@ -285,6 +288,50 @@ function searchContact() { // working
 	  .catch((err) => {
 		document.getElementById("searchResult").innerHTML = err.message;
 	  });
+// <<<<<<< HEAD
      
 
+// }
+// =======
 }
+
+function updateContact() { // not yet implemented
+
+	var first = document.getElementById("updateFirst").value;
+	var last = document.getElementById("updateLast").value;
+	var email = document.getElementById("updateEmail").value;
+	var phone = document.getElementById("updatePhone").value;
+
+	document.getElementById("updateResult").innerHTML = "";
+
+	var jsonPayload = '{"AdderID" : "' + userId + '", "FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '"}';
+
+	var url = urlBase + '/UpdateContact.' + extension;
+	
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: jsonPayload // change to JSON.stringify ???
+	}).then(res => {
+		return res.json()
+	  })
+	  .then(data => {
+		  // can we return contact ID as well ?
+		updateContactErr = data.err; 
+
+		if (updateContactErr == null) {
+			document.getElementById("updateResult").innerHTML = "Contact was successfully updated";
+		}
+		else {
+			document.getElementById("updateResult").innerHTML = "Contact was not updated";
+			return;
+		}
+
+	  })
+	  .catch((err) => {
+		document.getElementById("updateResult").innerHTML = err.message;
+	  });
+}
+// >>>>>>> 9d0254f104ec520781d28661ed82b590dd68e46e
