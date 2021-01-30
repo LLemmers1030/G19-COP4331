@@ -5,18 +5,11 @@ body {
   background-size: cover;
   background-position: center;
   font-family: sans-serif;
-  /* below is for spliced text */
-  /*
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden; */
 }
 
 .searchbox {
-  width: 1000px;
-  height: 400px;
+  width: 70%;
+  height: 70%;
   background: rgba(0, 0, 0, 0.25);
   color: #fff;
   top: 50%;
@@ -25,6 +18,49 @@ body {
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   padding: 80px 30px;
+}
+
+table th , table td{
+  text-align: center;
+}
+th {
+  background: rgb(0, 0, 0);
+  color: #fff;
+}
+
+.pagination {
+  margin: 0;
+}
+
+.pagination li:hover{
+    cursor: pointer;
+    color: #fff;
+}
+
+.header_wrap {
+  padding:30px 0;
+}
+
+.num_rows {
+  width: 0%;
+  float:left;
+}
+
+.tb_search{
+  width: 35%;
+  float:right;
+}
+
+.pagination-container {
+  width: 70%;
+  float:left;
+}
+
+.rows_count {
+  width: 20%;
+  float:right;
+  text-align:right;
+  color: rgb(255, 255, 255);
 }
 
 /* css for spliced text */
@@ -43,7 +79,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 15vh;
+  height: 10vh;
   overflow: hidden;
 }
 

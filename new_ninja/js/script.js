@@ -232,10 +232,6 @@ function searchContact() { // working
 		// create dynamic table
 		var table = document.createElement("table");
 		table.className = "table table-dark table-striped";
-// <<<<<<< HEAD
-   
-// =======
-// >>>>>>> 9d0254f104ec520781d28661ed82b590dd68e46e
 
 		// create header row from titles
 		var tr = table.insertRow(-1);
@@ -250,7 +246,7 @@ function searchContact() { // working
 			tr = table.insertRow(-1);
 			for (var j = 0; j < col.length; j++) {
 				if (j == col.length - 1) { // remove button
-					var tabCell = tr.insertCell(-1);
+					var td = tr.insertCell(-1);
 					var rmBtn = document.createElement('button');
 					rmBtn.type = "button";
 					rmBtn.className = "btn btn-primary";
@@ -259,10 +255,10 @@ function searchContact() { // working
 					rmBtn.onclick = function() {
 						window.location.href = "https://youtube.com"; // change to removeContact();
 					}
-					tabCell.appendChild(rmBtn);
+					td.appendChild(rmBtn);
 				}
 				else if (j == col.length - 2) { // edit button
-					var tabCell = tr.insertCell(-1);
+					var td = tr.insertCell(-1);
 					var editBtn = document.createElement('button');
 					editBtn.type = "button";
 					editBtn.className = "btn btn-primary";
@@ -270,29 +266,27 @@ function searchContact() { // working
 					editBtn.onclick = function() {
 						window.location.href = "https://youtube.com"; // change to editContact();
 					}
-					tabCell.appendChild(editBtn);
+					td.appendChild(editBtn);
 				}
 				else {
-					var tabCell = tr.insertCell(-1);
-					tabCell.innerHTML = data.results[i][col[j]];
+					var td = tr.insertCell(-1);
+					td.innerHTML = data.results[i][col[j]];
 				}
 			}
 		}
 
 		// add table to container
-		var divContainer = document.getElementById("showData");
+		var divContainer = document.getElementById("table-id");
 		divContainer.innerHTML = "";
 		divContainer.appendChild(table);
+
+
+		getPagination('#table-id');
 
 	  })
 	  .catch((err) => {
 		document.getElementById("searchResult").innerHTML = err.message;
 	  });
-// <<<<<<< HEAD
-     
-
-// }
-// =======
 }
 
 function updateContact() { // not yet implemented
@@ -334,4 +328,89 @@ function updateContact() { // not yet implemented
 		document.getElementById("updateResult").innerHTML = err.message;
 	  });
 }
-// >>>>>>> 9d0254f104ec520781d28661ed82b590dd68e46e
+
+
+
+
+
+//getPagination('#table-id');
+
+function getPagination(table) {
+
+    $('.pagination').html('');
+    var trnum = 0;									// reset tr counter 
+    var maxRows = 5;
+
+    var totalRows = $(table + ' tbody tr').length;		// numbers of rows 
+    $(table + ' tr:gt(0)').each(function () {			// each TR in  table and not the header
+        trnum++;									// Start Counter 
+        if (trnum > maxRows) {						// if tr number gt maxRows
+
+            $(this).hide();							// fade it out 
+        } if (trnum <= maxRows) { $(this).show(); }// else fade in Important in case if it ..
+    });											//  was fade out to fade it in 
+    if (totalRows > maxRows) {						// if tr total rows gt max rows option
+        var pagenum = Math.ceil(totalRows / maxRows);	// ceil total(rows/maxrows) to get ..  
+        //	numbers of pages 
+        for (var i = 1; i <= pagenum;) {			// for each page append pagination li 
+            // $('.pagination').append('<li data-page="' + i + '">\
+			// 					      <span>'+ i++ + '<span class="sr-only">(current)</span></span>\
+            // 					    </li>').show();
+            $('.pagination').append('<li class="page-item" data-page="' + i + '">\
+								      <span>'+ i++ + '<span class="sr-only page-link">(current)</span></span>\
+								    </li>').show();
+        }											// end for i 
+
+
+    } 												// end if row count > max rows
+    $('.pagination li:first-child').addClass('active'); // add active class to the first li 
+
+
+    //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
+    showig_rows_count(maxRows, 1, totalRows);
+    //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
+
+    $('.pagination li').on('click', function (e) {		// on click each page
+        e.preventDefault();
+        var pageNum = $(this).attr('data-page');	// get it's number
+        var trIndex = 0;							// reset tr counter
+        $('.pagination li').removeClass('active');	// remove active class from all li 
+        $(this).addClass('active');					// add active class to the clicked 
+
+
+        //SHOWING ROWS NUMBER OUT OF TOTAL
+        showig_rows_count(maxRows, pageNum, totalRows);
+        //SHOWING ROWS NUMBER OUT OF TOTAL
+
+
+
+        $(table + ' tr:gt(0)').each(function () {		// each tr in table not the header
+            trIndex++;								// tr index counter 
+            // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+            if (trIndex > (maxRows * pageNum) || trIndex <= ((maxRows * pageNum) - maxRows)) {
+                $(this).hide();
+            } else { $(this).show(); } 				//else fade in 
+        }); 										// end of for each tr in table
+    });	
+
+}
+
+// // SI SETTING
+// $(function () {
+//     // Just to append id number for each row  
+//     default_index();
+
+// });
+
+
+//ROWS SHOWING FUNCTION
+function showig_rows_count(maxRows, pageNum, totalRows) {
+    //Default rows showing
+    var end_index = maxRows * pageNum;
+    var start_index = ((maxRows * pageNum) - maxRows) + parseFloat(1);
+    if (end_index > totalRows) {
+        end_index = totalRows;
+    }
+    var string = 'Showing ' + start_index + ' to ' + end_index + ' of ' + totalRows + ' entries';
+    $('.rows_count').html(string);
+}
