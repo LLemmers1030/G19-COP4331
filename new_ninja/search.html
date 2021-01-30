@@ -5,21 +5,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/search.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Material Design Bootstrap -->
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/fb0100841b.js" crossorigin="anonymous"></script>
     <title>Contact Manager</title>
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             readCookie();
         }, false);
-    </script>
+    </script> -->
 </head>
 
 <body>
     <div class="me-3 mt-3">
         <div class="float-end">
-            <button id="search-button" type="button" class="btn btn-dark" onclick="doLogout();">
-                <i class="fas fa-sign-out-alt" id="userName"></i>
+            <span id="userName"></span>
+            <button id="search-button" type="button" class="btn btn-dark rounded" onclick="doLogout();">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
             </button>
         </div>
     </div>
@@ -28,97 +36,115 @@
         <div class="d-flex justify-content-center spliceText">
             <h3 data-text="Who are you looking for?"><span>Who are you looking for?</span></h3>
         </div>
-        <div class="input-group justify-content-center rounded mx-auto" style="width: 55rem;">
-            <div class="col-md-auto">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user-ninja"></i>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">First Name</a>
-                        <a class="dropdown-item" href="#">Last Name</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-auto">
+        <div class="input-group justify-content-center rounded mx-auto">
+
+            <!-- <div class="col-md-auto">
                 <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
                     aria-describedby="search-addon" id="searchInput" />
+            </div> -->
+            <style>
+                input.form-control {
+                    /* Not too sure what the !important is */
+                    width: 400px !important;
+                }
+            </style>
+
+            <div class="form-outline ">
+                <input type="search" id="form1" class="form-control" />
+                <label class="form-label text-white" for="form1">Search</label>
             </div>
             <div class="col-md-auto">
-                <button id="search-button" type="button" class="btn btn-primary" onclick="searchContact();">
+                <button id="search-button1" type="button" class="btn btn-primary border" onclick="searchContact();">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
         </div>
+
         <span id="searchResult"></span>
         <p id="showData"></p>
         <div class="d-flex mt-1 justify-content-center">
-            <button id="search-button" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button id="enter-press" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">
                 <i class="fas fa-user-ninja"> Add User</i>
             </button>
         </div>
-	<span id="addResult"></span>
+        <span id="addResult"></span>
     </section>
 
+
+    <script>
+
+        document.getElementById("searchInput").onkeypress = function (e) {
+            if (e.keyCode == 13) {
+                document.getElementById('search-button1').onclick();
+            }
+        }
+
+    </script>
+
+
+
     <!-- Modal -->
-	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered rounded">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered rounded">
 
-        <div class="modal-content">
-            <img src="/images/modalBack.jpg" class="img-fluid" alt="test">
-            <div class="modal-header text-center">
-                <h5 class="modal-title w-100" id="staticBackdropLabel">Add New User</h5>
-            </div>
-            <div class="modal-body">
-                <div class="container">
+            <div class="modal-content">
+                <img src="/images/modalBack.jpg" class="img-fluid" alt="test">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title w-100" id="staticBackdropLabel">Add New User</h5>
+                </div>
+                <div class="modal-body">
 
-                    <form>
-                        <div class="row text-black g-4">
+                    <div class="container">
+                        <form>
+                            <div class="row text-black g-4 mx-auto ">
 
-                            <div class="form-group col-md-6">
-                                <!-- <label for="first-name">First Name</label> -->
-                                <input type="text" class="form-control" id="addFirst" placeholder="First Name">
+                                <div class="form-group md-6">
+                                    <!-- <label for="first-name">First Name</label> -->
+                                    <input type="text" class="form-control" id="addFirst" placeholder="First Name">
+                                </div>
+                                <div class="form-group md-6">
+                                    <!-- <label for="last-name">Last Name</label> -->
+                                    <input type="text" class="form-control" id="addLast" placeholder="Last Name">
+                                </div>
+
+                                <div class="form-group md-6">
+                                    <!-- <label for="exampleInputEmail1" class="form-label">Email</label> -->
+                                    <input type="email" class="form-control" id="addEmail" aria-describedby="emailHelp"
+                                        placeholder="Email">
+                                </div>
+                                <div class="form-group md-6">
+                                    <!-- <label for="exampleInputPhoneNumber1" class="form-label">Phone Number</label> -->
+                                    <input type="phone-modal" class="form-control" id="addPhone"
+                                        placeholder="Phone Number">
+                                </div>
+
                             </div>
-                            <div class="form-group-col col-md-6">
-                                <!-- <label for="last-name">Last Name</label> -->
-                                <input type="text" class="form-control" id="addLast" placeholder="Last Name">
-                            </div>
-
-                            <div class="form-group-col col-md-6 col-md-offset-2">
-                                <!-- <label for="exampleInputEmail1" class="form-label">Email</label> -->
-                                <input type="email" class="form-control" id="addEmail"
-                                    aria-describedby="emailHelp" placeholder="Email">
-                            </div>
-                            <div class="form-group-col col-md-6">
-                                <!-- <label for="exampleInputPhoneNumber1" class="form-label">Phone Number</label> -->
-                                <input type="phone-modal" class="form-control" id="addPhone"
-                                    placeholder="Phone Number">
-                            </div>
-
                             <!-- Add show password in registration page -->
                             <!-- <i class="bi bi-eye"></i> -->
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary"  onclick="addContact();" data-bs-dismiss="modal">Submit</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addContact();"
+                        data-bs-dismiss="modal">Submit</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <!-- Bootstrap Integration -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
         integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
         crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
         integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj"
         crossorigin="anonymous"></script>
@@ -131,12 +157,20 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.js"></script>
 </body>
 
 </html>

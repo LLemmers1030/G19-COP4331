@@ -225,12 +225,14 @@ function searchContact() { // working
 			}
 		}
 
-		// extra column titles (maybe just use "" ?? )
-		col.push("Edit");
-		col.push("Remove");
+		// extra column titles (for edit and remove)
+		col.push("Manage");
+		col.push("");
 
 		// create dynamic table
 		var table = document.createElement("table");
+		table.className = "table table-dark table-striped";
+   
 
 		// create header row from titles
 		var tr = table.insertRow(-1);
@@ -283,4 +285,6 @@ function searchContact() { // working
 	  .catch((err) => {
 		document.getElementById("searchResult").innerHTML = err.message;
 	  });
+     
+
 }
