@@ -1,7 +1,6 @@
-// Very early version, inconsistentencies such as variables names
-// that need to be checked out, and some that are needed/unneeded.
-
 <?php
+  // Updated version of Register.php
+
 
   // Creating new mysqli object, parameters are as follows:
   // Server name, Database username, Database password, and finally database name.
@@ -13,15 +12,9 @@
   // Store the data in vars
   $login = $inData["Login"];
   $password = $inData["Password"];
-  
-  /*
-  $addedID = $inData["AdderID"];
   $firstName = $inData["FirstName"];
   $lastName = $inData["LastName"];
-  $email = $inData["Email"];
-  $phone = $inData["Phone"];
-  */
-
+  
   // Checking for connection
   if ($conn->connect_error)
   {
@@ -30,22 +23,14 @@
   else
   {
     // Query String
-    $sql = "INSERT INTO users (Login, Password) VALUES ( '$login', '$password')";
+    $sql = "INSERT INTO Ninjas (Login, Password, FirstName, LastName) VALUES (?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ssss', $login, $password, $firstName, $lastName);
+    $stmt->execute();
 
-    $result = $conn->query($sql);
+    // $result = $stmt->get_result();
 
-    if ($result->num_rows > 0)
-    {
-      $row = $result->fetch_assoc();
-      $id = $row["ID"];
-
-      returnWithInfo($id, $firstName, $lastName);
-    }
-    else
-    {
-      echo "Error: " . $sql . "" . mysql_error(html);
-    }
-
+    returnError(NULL);
     $conn->close();
   }
 
@@ -53,18 +38,18 @@
 	{
 		return json_decode(file_get_contents('php://input'), true);
 	}
+  
+  function returnError($err)
+  {
+        $rtrn = ['error' => $err];
+        sendJson($rtrn);
+  }
 
-	function sendResultInfoAsJson($obj)
+	function sendJson($obj)
 	{
 		header('Content-type: application/json');
-		echo $obj;
-	}
-	
-	function returnWithError($err)
-	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
-		sendResultInfoAsJson($retValue);
-	}
+		echo (json_encode($obj));
+	}  
 	
 	function returnWithInfo($id, $firstName, $lastName)
 	{

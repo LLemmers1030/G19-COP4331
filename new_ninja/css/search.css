@@ -1,22 +1,15 @@
 body {
-    margin: 0;
-    padding: 0;
-    background: url(/images/regBackground.jpg) no-repeat center center fixed;
-    background-size: cover;
-    background-position: center;
-    font-family: sans-serif;
-    /* below is for spliced text */
-    /*
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden; */
-  }
+  margin: 0;
+  padding: 0;
+  background: url(/images/tea.jpg) no-repeat center center fixed;
+  background-size: cover;
+  background-position: center;
+  font-family: sans-serif;
+}
 
 .searchbox {
-  width: 1000px;
-  height: 400px;
+  width: 70%;
+  height: 70%;
   background: rgba(0, 0, 0, 0.25);
   color: #fff;
   top: 50%;
@@ -25,6 +18,49 @@ body {
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   padding: 80px 30px;
+}
+
+table th , table td{
+  text-align: center;
+}
+th {
+  background: rgb(0, 0, 0);
+  color: #fff;
+}
+
+.pagination {
+  margin: 0;
+}
+
+.pagination li:hover{
+    cursor: pointer;
+    color: #fff;
+}
+
+.header_wrap {
+  padding:30px 0;
+}
+
+.num_rows {
+  width: 0%;
+  float:left;
+}
+
+.tb_search{
+  width: 35%;
+  float:right;
+}
+
+.pagination-container {
+  width: 70%;
+  float:left;
+}
+
+.rows_count {
+  width: 20%;
+  float:right;
+  text-align:right;
+  color: rgb(255, 255, 255);
 }
 
 /* css for spliced text */
@@ -43,97 +79,114 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 15vh;
+  height: 10vh;
   overflow: hidden;
 }
 
 h3 {
-    position: relative;
-    font-family: 'Montserrat', Arial, sans-serif;
-    font-size: calc(15px + 2vw);
-    font-weight: 700;
-    color: rgb(255, 255, 255);
-    letter-spacing: 0.02em;
-    /*text-transform: uppercase;*/
-    text-shadow: 0 0 0.15em #000000cc;
-    user-select: none;
-    white-space: nowrap;
+  position: relative;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: calc(15px + 2vw);
+  font-weight: 700;
+  color: rgb(255, 255, 255);
+  letter-spacing: 0.02em;
+  /*text-transform: uppercase;*/
+  text-shadow: 0 0 0.15em #000000cc;
+  user-select: none;
+  white-space: nowrap;
+  filter: blur(0.007em);
+  animation: shake 2.5s linear forwards;
+}
+
+h3 span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%);
+  -webkit-clip-path: polygon(10% 0%, 44% 0%, 70% 100%, 55% 100%);
+  clip-path: polygon(10% 0%, 44% 0%, 70% 100%, 55% 100%);
+}
+
+h3::before,
+h3::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+h3::before {
+  animation: crack1 2.5s linear forwards;
+  -webkit-clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
+  clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
+}
+
+h3::after {
+  animation: crack2 2.5s linear forwards;
+  -webkit-clip-path: polygon(44% 0%, 100% 0%, 100% 100%, 70% 100%);
+  clip-path: polygon(44% 0%, 100% 0%, 100% 100%, 70% 100%);
+}
+
+@keyframes shake {
+  5%,
+  15%,
+  25%,
+  35%,
+  55%,
+  65%,
+  75%,
+  95% {
+    filter: blur(0.018em);
+    transform: translateY(0.018em) rotate(0deg);
+  }
+
+  10%,
+  30%,
+  40%,
+  50%,
+  70%,
+  80%,
+  90% {
+    filter: blur(0.01em);
+    transform: translateY(-0.018em) rotate(0deg);
+  }
+
+  20%,
+  60% {
+    filter: blur(0.03em);
+    transform: translate(-0.018em, 0.018em) rotate(0deg);
+  }
+
+  45%,
+  85% {
+    filter: blur(0.03em);
+    transform: translate(0.018em, -0.018em) rotate(0deg);
+  }
+
+  100% {
     filter: blur(0.007em);
-    animation: shake 2.5s linear forwards;
+    transform: translate(0) rotate(-0.5deg);
   }
-  
-  h3 span {
-    position: absolute;
-    top: 0;
-    left: 0;
+}
+
+@keyframes crack1 {
+  0%,
+  95% {
     transform: translate(-50%, -50%);
-    -webkit-clip-path: polygon(10% 0%, 44% 0%, 70% 100%, 55% 100%);
-            clip-path: polygon(10% 0%, 44% 0%, 70% 100%, 55% 100%);
   }
-  
-  h3::before,
-  h3::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
+
+  100% {
+    transform: translate(-51%, -48%);
   }
-  
-  h3::before {
-    animation: crack1 2.5s linear forwards;
-    -webkit-clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
-            clip-path: polygon(0% 0%, 10% 0%, 55% 100%, 0% 100%);
+}
+
+@keyframes crack2 {
+  0%,
+  95% {
+    transform: translate(-50%, -50%);
   }
-  
-  h3::after {
-    animation: crack2 2.5s linear forwards;
-    -webkit-clip-path: polygon(44% 0%, 100% 0%, 100% 100%, 70% 100%);
-            clip-path: polygon(44% 0%, 100% 0%, 100% 100%, 70% 100%);
+
+  100% {
+    transform: translate(-49%, -53%);
   }
-  
-  @keyframes shake {
-    5%, 15%, 25%, 35%, 55%, 65%, 75%, 95% {
-        filter: blur(0.018em);
-        transform: translateY(0.018em) rotate(0deg);
-    }
-  
-    10%, 30%, 40%, 50%, 70%, 80%, 90% {
-        filter: blur(0.01em);
-        transform: translateY(-0.018em) rotate(0deg);
-    }
-  
-    20%, 60% {
-        filter: blur(0.03em);
-        transform: translate(-0.018em, 0.018em) rotate(0deg);
-    }
-  
-    45%, 85% {
-        filter: blur(0.03em);
-        transform: translate(0.018em, -0.018em) rotate(0deg);
-    }
-  
-    100% {
-        filter: blur(0.007em);
-        transform: translate(0) rotate(-0.5deg);
-    }
-  }
-  
-  @keyframes crack1 {
-    0%, 95% {
-        transform: translate(-50%, -50%);
-    }
-  
-    100% {
-        transform: translate(-51%, -48%);
-    }
-  }
-  
-  @keyframes crack2 {
-    0%, 95% {
-        transform: translate(-50%, -50%);
-    }
-  
-    100% {
-        transform: translate(-49%, -53%);
-    }
-  }
+}

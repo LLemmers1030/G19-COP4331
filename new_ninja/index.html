@@ -23,7 +23,7 @@
 		<h1>Login</h1>
 		<form>
 			<div class="form-group">
-				<label for="exampleInputEmail1">Username</label>
+				<label for="inlineFormInputGroupUsername">Username</label>
 				<input type="email" class="form-control" id="loginUsername" aria-describedby="emailHelp"
 					placeholder="Username">
 			</div>
@@ -35,19 +35,29 @@
 
 
 			<div class="d-grid gap-2">
-						<button name="submit" type ="submit" formnovalidate class="btn btn-primary" onClick="doLogin();">Login</button>
-						<button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">New
-							user?</button>
-						<span id="loginResult"></span>
-					</div>
-
-
+				<button name="submit" type="submit" formnovalidate class="btn btn-primary"
+					onClick="doLogin();">Login</button>
+				<button id="login_id" type="button" class="btn btn-link" data-bs-toggle="modal"
+					data-bs-target="#staticBackdrop">New
+					user?</button>
+				<span id="loginResult"></span>
+			</div>
 		</form>
-
-		
 
 	</div>
 
+	<script>
+
+		document.getElementById('login_id').onkeypress = function (e) {
+			if (e.keyCode == 13) {
+				document.getElementById('loginUsername').onclick();
+			}
+
+		}
+
+
+
+	</script>
 
 	<!-- Modal -->
 	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
