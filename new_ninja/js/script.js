@@ -206,7 +206,8 @@ function searchContact() { // working
 		return res.json()
 	  })
 	  .then(data => {
-		numContacts = data.count;
+		console.log(data.results);
+		  numContacts = data.count;
 
 		if (numContacts < 1 || numContacts == null) {
 			document.getElementById("searchResult").innerHTML = "No contacts were found";
@@ -226,8 +227,8 @@ function searchContact() { // working
 		}
 
 		// extra column titles (for edit and remove)
-		col.push("Manage");
-		col.push("");
+		col.push("Edit");
+		col.push("Delete");
 
 		// create dynamic table
 		var table = document.createElement("table");
@@ -253,7 +254,12 @@ function searchContact() { // working
 					rmBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
 					//rmBtn.innerHTML = '<i class="fas fa-user-times"></i>';
 					rmBtn.onclick = function() {
-						window.location.href = "https://youtube.com"; // change to removeContact();
+						$('#deletemodal').modal('show');
+						var index = $(this).closest('tr').index() - 1;
+                        console.log(index);
+                        var contactID = data.results[index].ID;
+                        console.log(contactID);
+						$('.modal-body #delete_id').val(contactID);
 					}
 					td.appendChild(rmBtn);
 				}
@@ -263,9 +269,23 @@ function searchContact() { // working
 					editBtn.type = "button";
 					editBtn.className = "btn btn-primary";
 					editBtn.innerHTML = '<i class="fas fa-user-edit"></i>';
+
 					editBtn.onclick = function() {
-						window.location.href = "https://youtube.com"; // change to editContact();
+						$('#editmodal').modal('show');
+						console.log(data.results);
+						var index = $(this).closest('tr').index() - 1;
+                        console.log(index);
+                        var contactID = data.results[index].ID;
+                        console.log(contactID);
+						$('.modal-body #update_id').val(contactID);
+
+						// fills in text boxes
+						$('#updateFirst').val(data.results[index].FirstName);
+						$('#updateLast').val(data.results[index].LastName);
+						$('#updateEmail').val(data.results[index].Email);
+						$('#updatePhone').val(data.results[index].Phone);
 					}
+
 					td.appendChild(editBtn);
 				}
 				else {
@@ -279,10 +299,8 @@ function searchContact() { // working
 		var divContainer = document.getElementById("table-id");
 		divContainer.innerHTML = "";
 		divContainer.appendChild(table);
-
-
-		getPagination('#table-id');
-
+		
+		  getPagination('#table-id');
 	  })
 	  .catch((err) => {
 		document.getElementById("searchResult").innerHTML = err.message;
@@ -312,8 +330,7 @@ function updateContact() { // not yet implemented
 		return res.json()
 	  })
 	  .then(data => {
-		  // can we return contact ID as well ?
-		updateContactErr = data.err; 
+		updateContactErr = data.error; 
 
 		if (updateContactErr == null) {
 			document.getElementById("updateResult").innerHTML = "Contact was successfully updated";
@@ -329,11 +346,44 @@ function updateContact() { // not yet implemented
 	  });
 }
 
+function removeContact() {
+
+	var ID2delete = document.getElementById("delete_id").value;
+
+	document.getElementById("deleteResult").innerHTML = "";
+
+	var jsonPayload = '{"AdderID" : "' + userId + '", "ID" : "' + ID2delete + '"}';
+
+	var url = urlBase + '/DeleteContact.' + extension;
+	
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: jsonPayload // change to JSON.stringify ???
+	}).then(res => {
+		return res.json()
+	  })
+	  .then(data => {
+		deleteContactErr = data.error; 
+
+		if (deleteContactErr == null) {
+			document.getElementById("deleteResult").innerHTML = "Contact was successfully deleted";
+		}
+		else {
+			document.getElementById("deleteResult").innerHTML = "Contact was not deleted";
+			return;
+		}
+
+	  })
+	  .catch((err) => {
+		document.getElementById("deleteResult").innerHTML = err.message;
+	  });
+}
 
 
 
-
-//getPagination('#table-id');
 
 function getPagination(table) {
 
@@ -394,14 +444,6 @@ function getPagination(table) {
     });	
 
 }
-
-// // SI SETTING
-// $(function () {
-//     // Just to append id number for each row  
-//     default_index();
-
-// });
-
 
 //ROWS SHOWING FUNCTION
 function showig_rows_count(maxRows, pageNum, totalRows) {

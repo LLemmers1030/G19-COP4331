@@ -8,21 +8,24 @@
     <link rel="stylesheet" type="text/css" href="css/search.css">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css" rel="stylesheet" />
+    <!-- Utilizes data tables from CDN at https://cdn.datatables.net/-->
+    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css"> -->
 
     <title>Contact Manager</title>
 
-    <!-- <script type="text/javascript">
+    <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             readCookie();
         }, false);
-    </script> -->
+    </script>
 </head>
 
 <body>
+    <!-- Logout button -->
     <div class="me-3 mt-3">
         <div class="float-end">
             <span id="userName"></span>
-            <button id="search-button" type="button" class="btn btn-dark rounded" onclick="doLogout();">
+            <button id="search-button" type="button" class="btn btn-light rounded" onclick="doLogout();">
                 <i class="fas fa-sign-out-alt"></i>
                 Logout
             </button>
@@ -36,12 +39,14 @@
 
         <span id="addResult"></span>
 
+        <!-- Search bar and add contact form -->
         <div class="container">
             <div class="header_wrap mb-3">
                 <div class="tb_search row">
                     <div class="col">
                         <div class="form-outline ">
-                            <input type="search" id="searchInput" onkeyup="searchContact()" class="form-control" />
+                            <input type="search" id="searchInput" class="mb-4" onkeyup="searchContact()"
+                                class="form-control" />
                             <label class="form-label text-white" for="form1">Search</label>
                         </div>
                     </div>
@@ -79,6 +84,118 @@
         }
 
     </script>
+
+
+    <!-- ################################################################################################################################################ -->
+
+    <!-- DELETE POPUP FORM (Bootstrap modal) -->
+    <!-- displays with help from javascript -->
+
+    <div class="modal fade" id="deletemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete contact Data</h5>
+                    <button type="button" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Will write the update -->
+                <form>
+                    <div class="modal-body">
+
+                        <!-- Allows for the javascript edit to work -->
+                        <!-- Notice the added id fields in the input tags -->
+                        <input type="hidden" name="delete_id" id="delete_id">
+
+                        <h4>Do you want to delete this data?</h4>
+
+                    </div>
+                    <div class="modal-footer">
+                        <span hidden type="text" name="contactID" id="contactID"></span>
+                        <button id="deleteBtn" type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                            data-bs-dismiss="modal">No (Do not delete)</button>
+                        <!-- This button should take you to deletecode.php -->
+                        <button type="button" name="deletedata" class="btn btn-primary" onclick="removeContact();"
+                            data-bs-dismiss="modal">Yes (Do delete)</button>
+                        <span id="deleteResult"></span>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Test for deletion -->
+    <!-- <script>
+        // Get the button that opens the modal
+        var btn = document.getElementById("mydeleteBtn");
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+    </script> -->
+
+    <!-- ################################################################################################################################################ -->
+
+    <!-- EDIT POPUP FORM (Bootstrap modal) -->
+    <!-- displays with help from javascript -->
+
+    <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit contact Data</h5>
+                    <button type="button" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Will write the update -->
+                <form>
+                    <!-- <form action="updatecode.php" method="POST"> -->
+                    <div class="modal-body">
+
+                        <!-- Allows for the javascript edit to work -->
+                        <!-- Notice the added id fields in the input tags -->
+                        <input type="hidden" name="update_id" id="update_id">
+
+                        <div class="mb-3">
+                            <label>First Name</label>
+                            <input type="text" name="fname" id="updateFirst" class="form-control"
+                                placeholder="Enter first name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Last Name</label>
+                            <input type="text" name="lname" id="updateLast" class="form-control"
+                                placeholder="Enter last name">
+                        </div>
+                        <!-- had form-check inside the class before. may or may not need -->
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="text" name="course" id="updateEmail" class="form-control"
+                                placeholder="Enter Email">
+                        </div>
+                        <!-- same witht the form-check -->
+                        <div class="mb-3">
+                            <label>Phone Number</label>
+                            <input type="text" name="contact" id="updatePhone" class="form-control"
+                                placeholder="Enter phone number">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal">Close</button>
+                        <button type="button" name="updatedata" class="btn btn-primary" onclick="updateContact();"
+                            data-bs-dismiss="modal">Update Contact</button>
+                        <span id="updateResult"></span>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ################################################################################################################################################ -->
 
 
     <!-- Modal -->
@@ -133,6 +250,28 @@
     </div>
 
 
+    <!-- Script for the zero configuration data table on CDN at https://datatables.net/examples/basic_init/zero_configuration.html -->
+    <!-- <script>
+        $(document).ready(function () {
+            // used in the table
+            $('.table').DataTable({
+
+                // Code here is for displaying output 
+                "pagingType": "full_numbers",
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                responsive: true,
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search your data",
+                }
+
+            });
+        });
+    </script> -->
+
     <!-- Bootstrap Integration -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
@@ -156,6 +295,11 @@
     <!-- For our javascript files on the server -->
     <script type="text/javascript" src="js/script.js"></script>
     <script type="text/javascript" src="js/md5.js"></script>
+
+    <!-- Script for the pagination and search from CDN at https://cdn.datatables.net/
+    <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"> </script> -->
+    <!-- Script for the bootstrap integration for the data table on CDN at https://cdn.datatables.net/ -->
+    <!-- <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"> </script> -->
 </body>
 
 </html>
