@@ -41,10 +41,7 @@
 		$stmt->execute();
 		$result = $stmt->get_result();
 
-		// Get all results and remove duplicates
-		// Ex: first and last name both contain the same substring
 		$searchResults = $result->fetch_all(MYSQLI_ASSOC);
-		//$filteredResults = array_unique($searchResults, SORT_REGULAR);
 
 		returnInfo($searchResults);
 		$conn->close();
