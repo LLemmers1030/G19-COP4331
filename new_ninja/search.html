@@ -96,7 +96,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Delete contact Data</h5>
-                    <button type="button" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button> -->
                 </div>
 
                 <!-- Will write the update -->
@@ -112,7 +112,7 @@
                     </div>
                     <div class="modal-footer">
                         <span hidden type="text" name="contactID" id="contactID"></span>
-                        <button id="deleteBtn" type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                        <button id="deleteBtn" type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">No (Do not delete)</button>
                         <!-- This button should take you to deletecode.php -->
                         <button type="button" name="deletedata" class="btn btn-primary" onclick="removeContact();"
@@ -146,7 +146,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit contact Data</h5>
-                    <button type="button" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button> -->
                 </div>
 
                 <!-- Will write the update -->
@@ -184,7 +184,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" name="updatedata" class="btn btn-primary" onclick="updateContact();"
                             data-bs-dismiss="modal">Update Contact</button>
                         <span id="updateResult"></span>

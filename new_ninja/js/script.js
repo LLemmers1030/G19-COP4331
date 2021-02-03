@@ -7,6 +7,11 @@ var userId = 0;
 var firstName = "";
 var lastName = "";
 
+$('button[data-bs-dismiss="modal"]').click(function(){
+	$(this).closest('.modal').modal('hide'); 
+});
+
+
 function doLogin() { // working
 
 	userId = 0;
@@ -256,9 +261,7 @@ function searchContact() { // working
 					rmBtn.onclick = function() {
 						$('#deletemodal').modal('show');
 						var index = $(this).closest('tr').index() - 1;
-                        console.log(index);
                         var contactID = data.results[index].ID;
-                        console.log(contactID);
 						$('.modal-body #delete_id').val(contactID);
 					}
 					td.appendChild(rmBtn);
@@ -274,9 +277,7 @@ function searchContact() { // working
 						$('#editmodal').modal('show');
 						console.log(data.results);
 						var index = $(this).closest('tr').index() - 1;
-                        console.log(index);
                         var contactID = data.results[index].ID;
-                        console.log(contactID);
 						$('.modal-body #update_id').val(contactID);
 
 						// fills in text boxes
@@ -346,7 +347,7 @@ function updateContact() { // not yet implemented
 	  });
 }
 
-function removeContact() {
+function removeContact() { // working
 
 	var ID2delete = document.getElementById("delete_id").value;
 
