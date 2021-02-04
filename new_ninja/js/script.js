@@ -20,12 +20,10 @@ function doLogin() { // working
 
 	var login = document.getElementById("loginUsername").value;
 	var password = document.getElementById("loginPassword").value;
-	//var hash = md5(password);
 
 	document.getElementById("loginResult").innerHTML = "";
 
 	var jsonPayload = '{"Login" : "' + login + '", "Password" : "' + password + '"}';
-	//var jsonPayload = '{"Login" : "' + login + '", "Password" : "' + hash + '"}';
 	var url = urlBase + '/Login.' + extension;
 	
 	fetch(url, {
@@ -106,16 +104,12 @@ function doRegister() { // not implemented
 
 	var first = document.getElementById("registerFirst").value;
 	var last = document.getElementById("registerLast").value;
-	var email = document.getElementById("registerEmail").value;
-	var phone = document.getElementById("registerPhone").value;
 	var login = document.getElementById("registerUsername").value;
 	var password = document.getElementById("registerPassword").value;
-	//var hash = md5(password);
 
 	document.getElementById("registerResult").innerHTML = "";
 
-	var jsonPayload = '{"FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '", "Login" : "' + login + '", "Password" : "' + password + '"}';
-	//var jsonPayload = '{"FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '", "Login" : "' + login + '", "Password" : "' + hash + '"}';
+	var jsonPayload = '{"FirstName" : "' + first + '", "LastName" : "' + last + '", "Login" : "' + login + '", "Password" : "' + password + '"}';
 	var url = urlBase + '/Register.' + extension;
 	
 	fetch(url, {
@@ -141,7 +135,6 @@ function doRegister() { // not implemented
 		saveCookie();
 
 		window.location.href = "search.html";
-		//console.log(data)
 	  })
 	  .catch((err) => {
 		document.getElementById("registerResult").innerHTML = err.message;
@@ -211,7 +204,6 @@ function searchContact() { // working
 		return res.json()
 	  })
 	  .then(data => {
-		console.log(data.results);
 		  numContacts = data.count;
 
 		if (numContacts < 1 || numContacts == null) {
@@ -275,7 +267,6 @@ function searchContact() { // working
 
 					editBtn.onclick = function() {
 						$('#editmodal').modal('show');
-						console.log(data.results);
 						var index = $(this).closest('tr').index() - 1;
                         var contactID = data.results[index].ID;
 						$('.modal-body #update_id').val(contactID);
@@ -308,16 +299,17 @@ function searchContact() { // working
 	  });
 }
 
-function updateContact() { // not yet implemented
+function updateContact() { // working
 
 	var first = document.getElementById("updateFirst").value;
 	var last = document.getElementById("updateLast").value;
 	var email = document.getElementById("updateEmail").value;
 	var phone = document.getElementById("updatePhone").value;
+	var ID2update = document.getElementById("update_id").value;
 
 	document.getElementById("updateResult").innerHTML = "";
 
-	var jsonPayload = '{"AdderID" : "' + userId + '", "FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '"}';
+	var jsonPayload = '{"AdderID" : "' + userId + '", "ID" : "' + ID2update + '", "FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '"}';
 
 	var url = urlBase + '/UpdateContact.' + extension;
 	
@@ -389,66 +381,55 @@ function removeContact() { // working
 function getPagination(table) {
 
     $('.pagination').html('');
-    var trnum = 0;									// reset tr counter 
+    var trnum = 0;	
     var maxRows = 5;
 
-    var totalRows = $(table + ' tbody tr').length;		// numbers of rows 
-    $(table + ' tr:gt(0)').each(function () {			// each TR in  table and not the header
-        trnum++;									// Start Counter 
-        if (trnum > maxRows) {						// if tr number gt maxRows
+    var totalRows = $(table + ' tbody tr').length;
+    $(table + ' tr:gt(0)').each(function () {	
+        trnum++;	
+        if (trnum > maxRows) {	
 
-            $(this).hide();							// fade it out 
-        } if (trnum <= maxRows) { $(this).show(); }// else fade in Important in case if it ..
-    });											//  was fade out to fade it in 
-    if (totalRows > maxRows) {						// if tr total rows gt max rows option
-        var pagenum = Math.ceil(totalRows / maxRows);	// ceil total(rows/maxrows) to get ..  
+            $(this).hide();			
+        } if (trnum <= maxRows) { $(this).show(); }
+    });									
+    if (totalRows > maxRows) {				
+        var pagenum = Math.ceil(totalRows / maxRows);	 
         //	numbers of pages 
-        for (var i = 1; i <= pagenum;) {			// for each page append pagination li 
-            // $('.pagination').append('<li data-page="' + i + '">\
-			// 					      <span>'+ i++ + '<span class="sr-only">(current)</span></span>\
-            // 					    </li>').show();
+        for (var i = 1; i <= pagenum;) {
             $('.pagination').append('<li class="page-item" data-page="' + i + '">\
 								      <span>'+ i++ + '<span class="sr-only page-link">(current)</span></span>\
 								    </li>').show();
-        }											// end for i 
+        }	
+    } 							
+    $('.pagination li:first-child').addClass('active'); 
 
 
-    } 												// end if row count > max rows
-    $('.pagination li:first-child').addClass('active'); // add active class to the first li 
+    showing_rows_count(maxRows, 1, totalRows);
 
-
-    //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
-    showig_rows_count(maxRows, 1, totalRows);
-    //SHOWING ROWS NUMBER OUT OF TOTAL DEFAULT
-
-    $('.pagination li').on('click', function (e) {		// on click each page
+    $('.pagination li').on('click', function (e) {	
         e.preventDefault();
-        var pageNum = $(this).attr('data-page');	// get it's number
-        var trIndex = 0;							// reset tr counter
-        $('.pagination li').removeClass('active');	// remove active class from all li 
-        $(this).addClass('active');					// add active class to the clicked 
+        var pageNum = $(this).attr('data-page');	
+        var trIndex = 0;						
+        $('.pagination li').removeClass('active');	
+        $(this).addClass('active');				
 
 
-        //SHOWING ROWS NUMBER OUT OF TOTAL
-        showig_rows_count(maxRows, pageNum, totalRows);
-        //SHOWING ROWS NUMBER OUT OF TOTAL
+        showing_rows_count(maxRows, pageNum, totalRows);
 
 
 
-        $(table + ' tr:gt(0)').each(function () {		// each tr in table not the header
-            trIndex++;								// tr index counter 
-            // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
+        $(table + ' tr:gt(0)').each(function () {	
+            trIndex++;						
             if (trIndex > (maxRows * pageNum) || trIndex <= ((maxRows * pageNum) - maxRows)) {
                 $(this).hide();
-            } else { $(this).show(); } 				//else fade in 
-        }); 										// end of for each tr in table
+            } else { $(this).show(); } 			
+        }); 						
     });	
 
 }
 
 //ROWS SHOWING FUNCTION
-function showig_rows_count(maxRows, pageNum, totalRows) {
-    //Default rows showing
+function showing_rows_count(maxRows, pageNum, totalRows) {
     var end_index = maxRows * pageNum;
     var start_index = ((maxRows * pageNum) - maxRows) + parseFloat(1);
     if (end_index > totalRows) {
