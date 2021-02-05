@@ -60,7 +60,24 @@
                 </div>
             </div>
             <span id="searchResult"></span>
-            <p id="table-id"></p>
+            <!-- <p id="table-id"></p> -->
+
+            <table id="table-id" class="table table-dark table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>ID</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="table-data">
+
+                </tbody>
+            </table>
 
             <div class='pagination-container'>
                 <nav>
@@ -112,8 +129,8 @@
                     </div>
                     <div class="modal-footer">
                         <span hidden type="text" name="contactID" id="contactID"></span>
-                        <button id="deleteBtn" type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">No (Do not delete)</button>
+                        <button id="deleteBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">No (Do
+                            not delete)</button>
                         <!-- This button should take you to deletecode.php -->
                         <button type="button" name="deletedata" class="btn btn-primary" onclick="removeContact();"
                             data-bs-dismiss="modal">Yes (Do delete)</button>
