@@ -7,13 +7,13 @@ var userId = 0;
 var firstName = "";
 var lastName = "";
 
+var globalData;
+var table;
 
 $('button[data-bs-dismiss="modal"]').click(function () {
 	$(this).closest('.modal').modal('hide');
 });
 
-// remove this before pushing to server
-//getPagination("#table-id");
 
 function doLogin() { // working
 
@@ -26,7 +26,6 @@ function doLogin() { // working
 
 	document.getElementById("loginResult").innerHTML = "";
 
-	//var jsonPayload = '{"Login" : "' + login + '", "Password" : "' + password + '"}';
 	var url = urlBase + '/Login.' + extension;
 
 	fetch(url, {
@@ -34,7 +33,6 @@ function doLogin() { // working
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		//body: jsonPayload // change to JSON.stringify ???
 		body: JSON.stringify({
 			Login: login,
 			Password: password
@@ -120,7 +118,6 @@ function doRegister() { // not implemented
 
 	document.getElementById("registerResult").innerHTML = "";
 
-	//var jsonPayload = '{"FirstName" : "' + first + '", "LastName" : "' + last + '", "Login" : "' + login + '", "Password" : "' + password + '"}';
 	var url = urlBase + '/Register.' + extension;
 
 	fetch(url, {
@@ -128,7 +125,6 @@ function doRegister() { // not implemented
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		//body: jsonPayload // change to JSON.stringify ???
 		body: JSON.stringify({
 			FirstName: first,
 			LastName: last,
@@ -167,7 +163,6 @@ function addContact() { // working
 
 	document.getElementById("addResult").innerHTML = "";
 
-	//var jsonPayload = '{"AdderID" : "' + userId + '", "FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '"}';
 	var url = urlBase + '/AddContact.' + extension;
 
 	fetch(url, {
@@ -175,7 +170,6 @@ function addContact() { // working
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		//body: jsonPayload // change to JSON.stringify ???
 		body: JSON.stringify({
 			AdderID: userId,
 			FirstName: first,
@@ -216,7 +210,6 @@ function searchContact() { // working
 
 	document.getElementById("searchResult").innerHTML = "";
 
-	//var jsonPayload = '{"AdderID" : "' + userId + '", "Search" : "' + search + '"}';
 	var url = urlBase + '/SearchContact.' + extension;
 
 	fetch(url, {
@@ -224,7 +217,6 @@ function searchContact() { // working
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		//body: jsonPayload // change to JSON.stringify ???
 		body: JSON.stringify({
 			AdderID: userId,
 			Search: search
@@ -233,6 +225,7 @@ function searchContact() { // working
 		return res.json()
 	})
 		.then(data => {
+			globalData = data;
 			createDataSet(data);
 		})
 		.catch((err) => {
@@ -250,7 +243,6 @@ function updateContact() { // working
 
 	document.getElementById("updateResult").innerHTML = "";
 
-	//var jsonPayload = '{"AdderID" : "' + userId + '", "ID" : "' + ID2update + '", "FirstName" : "' + first + '", "LastName" : "' + last + '", "Email" : "' + email + '", "Phone" : "' + phone + '"}';
 	var url = urlBase + '/UpdateContact.' + extension;
 
 	fetch(url, {
@@ -258,7 +250,6 @@ function updateContact() { // working
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		//body: jsonPayload // change to JSON.stringify ???
 		body: JSON.stringify({
 			AdderID: userId,
 			ID: ID2update,
@@ -293,7 +284,6 @@ function removeContact() { // working
 
 	document.getElementById("deleteResult").innerHTML = "";
 
-	//var jsonPayload = '{"AdderID" : "' + userId + '", "ID" : "' + ID2delete + '"}';
 	var url = urlBase + '/DeleteContact.' + extension;
 
 	fetch(url, {
@@ -301,7 +291,6 @@ function removeContact() { // working
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		//body: jsonPayload // change to JSON.stringify ???
 		body: JSON.stringify({
 			AdderID: userId,
 			ID: ID2delete
@@ -354,51 +343,15 @@ function createDataSet(data) {
 	for (var i = 0; i < numContacts; i++) {
 		dataSet.push(new Array());
 		for (var j = 0; j < col.length; j++) {
-			// if (j == col.length + 1) {
-			// 	var rmBtn = document.createElement('button');
-		 	// 	rmBtn.type = "button";
-		 	// 	rmBtn.className = "btn btn-primary";
-		 	// 	rmBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-		 	// 	rmBtn.onclick = function () {
-		 	// 		$('#deletemodal').modal('show');
-		 	// 		//var index = $(this).closest('tr').index() - 1;
-		 	// 		//var contactID = data.results[index].ID;
-		 	// 		//$('.modal-body #delete_id').val(contactID);
-		 	// 	}
-		 	// 	dataSet[i].push(rmBtn);
-			// }
-			// else if (j == col.length) { // edit button
-			// 	var td = tr.insertCell(-1);
-			// 	var editBtn = document.createElement('button');
-			// 	editBtn.type = "button";
-			// 	editBtn.className = "btn btn-primary";
-			// 	editBtn.innerHTML = '<i class="fas fa-user-edit"></i>';
-			// 	editBtn.onclick = function () {
-			// 		$('#editmodal').modal('show');
-			// 		//var index = $(this).closest('tr').index() - 1;
-			// 		//var contactID = data.results[index].ID;
-			// 		//$('.modal-body #update_id').val(contactID);
-
-			// 		// fills in text boxes
-			// 		$('#updateFirst').val(data.results[index].FirstName);
-			// 		$('#updateLast').val(data.results[index].LastName);
-			// 		$('#updateEmail').val(data.results[index].Email);
-			// 		$('#updatePhone').val(data.results[index].Phone);
-			// 	}
-			// 	dataSet[i].push(editBtn);
-			// }
-
 			dataSet[i].push(data.results[i][col[j]]);
 		}
-		console.log(dataSet[i]);
 	}
 
 	showTable(dataSet);
 }
 
 function showTable(dataSet) {
-	//$(document).ready(function () {
-		$('#table-id').DataTable({
+		table = $('#table-id').DataTable({
 			data: dataSet,
 			columns: [
 				{ title: "First Name"},
@@ -406,13 +359,13 @@ function showTable(dataSet) {
 				{ title: "Email"},
 				{ title: "Phone"},
 				{ title: "ID"},
-				{ title: "Edit"},
-				//{ title: "Delete"}
+				{ title: "Manage"},
 			],
 			"columnDefs": [{
 				"targets": -1,
 				"data": null,
-				"defaultContent": "<button class= "btn btn-dark"> Hi </button>"
+				"defaultContent": '<button class="btn btn-light me-3 edtBtn"><i class="fas fa-user-edit"></i></button>'
+									+ '<button class="btn btn-light delBtn"><i class="fas fa-trash-alt"></i></button>'
 			}],
 			destroy: true,
 			aaData: Response.data,
@@ -421,8 +374,32 @@ function showTable(dataSet) {
 			"searching": false,
 			dom: 'l<"toolbar">frtip',
 		});
-	//})
 }
+
+$('#table-id').on('click', '.edtBtn', function () {
+	$('#editmodal').modal('show');
+	var row_data = table.row($(this).closest('tr')).data();
+	console.log(row_data);
+	var contactID = row_data[4]; // change for ID to be first col
+	console.log(contactID);
+	$('.modal-body #update_id').val(contactID);
+
+	$('#updateFirst').val(row_data[0]);
+	$('#updateLast').val(row_data[1]);
+	$('#updateEmail').val(row_data[2]);
+	$('#updatePhone').val(row_data[3]);
+})
+
+$('#table-id').on('click', '.delBtn', function () {
+	$('#deletemodal').modal('show');
+	var row_data = table.row($(this).closest('tr')).data();
+	console.log(row_data);
+	var contactID = row_data[4]; // change for ID to be first col
+	console.log(contactID);
+	$('.modal-body #delete_id').val(contactID);
+})
+
+
 
 // function createTable(data) {
 // 	var tableBody = document.getElementById("table-data");
