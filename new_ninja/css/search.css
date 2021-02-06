@@ -16,7 +16,7 @@ body {
 
 .searchbox {
   width: 1000px;
-  height: 400px;
+  height: 500px;
   background: rgba(0, 0, 0, 0.25);
   color: #fff;
   top: 50%;
@@ -25,6 +25,10 @@ body {
   transform: translate(-50%, -50%);
   box-sizing: border-box;
   padding: 80px 30px;
+}
+
+#form1 {
+  background-color: rgba(255, 255, 255, 0);
 }
 
 /* css for spliced text */
@@ -153,4 +157,24 @@ h3::after {
   100% {
     transform: translate(-49%, -53%);
   }
+}
+
+/* button for datatable search button*/
+.toolbar {
+  float: left;
+}
+
+/* acticve page color */
+.page-item.active .page-link {
+  background-color: white !important;
+  border: 1px solid black;
+}
+/* background color */
+.page-item .page-link {
+  background-color: #292b2c !important;
+  border: 1px solid black;
+}
+/* inside text color */
+.page-link {
+  color: darkgray !important;
 }
