@@ -1,5 +1,4 @@
 
-
 var urlBase = '/LAMPAPI';
 var extension = 'php';
 
@@ -9,11 +8,16 @@ var lastName = "";
 
 var globalData;
 var table;
+var search;
 
 $('button[data-bs-dismiss="modal"]').click(function () {
 	$(this).closest('.modal').modal('hide');
 });
 
+// load all contacts when page first loads
+$(document).ready(function() {
+	searchContact();
+});
 
 function doLogin() { // working
 
@@ -89,7 +93,7 @@ function readCookie() { // working
 		window.location.href = "index.html";
 	}
 	else {
-		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+		document.getElementById("userName").innerHTML = "SIGNED IN AS: " + firstName + " " + lastName;
 	}
 }
 // changes the color of "signed in as ... "
@@ -198,6 +202,9 @@ function addContact() { // working
 			document.getElementById("addEmail").value = "";
 			document.getElementById("addPhone").value = "";
 
+			search = "";
+			searchContact();
+
 		})
 		.catch((err) => {
 			document.getElementById("addResult").innerHTML = err.message;
@@ -206,7 +213,7 @@ function addContact() { // working
 
 function searchContact() { // working
 
-	var search = document.getElementById("form1").value;
+	search = document.getElementById("searchInput").value;
 
 	document.getElementById("searchResult").innerHTML = "";
 
@@ -272,6 +279,9 @@ function updateContact() { // working
 				return;
 			}
 
+			search = "";
+			searchContact();
+
 		})
 		.catch((err) => {
 			document.getElementById("updateResult").innerHTML = err.message;
@@ -308,6 +318,9 @@ function removeContact() { // working
 				document.getElementById("deleteResult").innerHTML = "Contact was not deleted";
 				return;
 			}
+
+			search = "";
+			searchContact();
 
 		})
 		.catch((err) => {
@@ -364,7 +377,7 @@ function showTable(dataSet) {
 			"columnDefs": [{
 				"targets": -1,
 				"data": null,
-				"defaultContent": '<button class="btn btn-light me-3 edtBtn"><i class="fas fa-user-edit"></i></button>'
+				"defaultContent": '<button class="btn btn-light me-2 edtBtn"><i class="fas fa-user-edit"></i></button>'
 									+ '<button class="btn btn-light delBtn"><i class="fas fa-trash-alt"></i></button>'
 			}],
 			destroy: true,
@@ -379,9 +392,7 @@ function showTable(dataSet) {
 $('#table-id').on('click', '.edtBtn', function () {
 	$('#editmodal').modal('show');
 	var row_data = table.row($(this).closest('tr')).data();
-	console.log(row_data);
 	var contactID = row_data[4]; // change for ID to be first col
-	console.log(contactID);
 	$('.modal-body #update_id').val(contactID);
 
 	$('#updateFirst').val(row_data[0]);
@@ -393,201 +404,6 @@ $('#table-id').on('click', '.edtBtn', function () {
 $('#table-id').on('click', '.delBtn', function () {
 	$('#deletemodal').modal('show');
 	var row_data = table.row($(this).closest('tr')).data();
-	console.log(row_data);
 	var contactID = row_data[4]; // change for ID to be first col
-	console.log(contactID);
 	$('.modal-body #delete_id').val(contactID);
 })
-
-
-
-// function createTable(data) {
-// 	var tableBody = document.getElementById("table-data");
-// 	$("#table-data tr").remove();
-
-// 	// below is code to make search results table
-// 	numContacts = data.count;
-// 	if (numContacts == 0) {
-// 		var tr = tableBody.insertRow(-1);
-// 		tr.className = "no-contacts";
-// 		var td = tr.insertCell(-1);
-// 		td.innerHTML = "No contacts were found.";
-// 		td.colSpan = "10";
-// 	}
-
-// 	// header titles
-// 	var col = [];
-// 	for (var i = 0; i < numContacts; i++) {
-// 		for (var key in data.results[i]) {
-// 			if (col.indexOf(key) == -1) {
-// 				col.push(key);
-// 			}
-// 		}
-// 	}
-
-// 	// add JSON data to table
-// 	for (var i = 0; i < numContacts; i++) {
-// 		var tr = tableBody.insertRow(-1);
-// 		for (var j = 0; j < col.length + 2; j++) {
-// 			if (j == col.length + 1) { // remove button
-// 				var td = tr.insertCell(-1);
-// 				var rmBtn = document.createElement('button');
-// 				rmBtn.type = "button";
-// 				rmBtn.className = "btn btn-primary";
-// 				rmBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-// 				//rmBtn.innerHTML = '<i class="fas fa-user-times"></i>';
-// 				rmBtn.onclick = function () {
-// 					$('#deletemodal').modal('show');
-// 					var index = $(this).closest('tr').index() - 1;
-// 					var contactID = data.results[index].ID;
-// 					$('.modal-body #delete_id').val(contactID);
-// 				}
-// 				td.appendChild(rmBtn);
-// 			}
-// 			else if (j == col.length) { // edit button
-// 				var td = tr.insertCell(-1);
-// 				var editBtn = document.createElement('button');
-// 				editBtn.type = "button";
-// 				editBtn.className = "btn btn-primary";
-// 				editBtn.innerHTML = '<i class="fas fa-user-edit"></i>';
-
-// 				editBtn.onclick = function () {
-// 					$('#editmodal').modal('show');
-// 					var index = $(this).closest('tr').index() - 1;
-// 					var contactID = data.results[index].ID;
-// 					$('.modal-body #update_id').val(contactID);
-
-// 					// fills in text boxes
-// 					$('#updateFirst').val(data.results[index].FirstName);
-// 					$('#updateLast').val(data.results[index].LastName);
-// 					$('#updateEmail').val(data.results[index].Email);
-// 					$('#updatePhone').val(data.results[index].Phone);
-// 				}
-
-// 				td.appendChild(editBtn);
-// 			}
-// 			else {
-// 				var td = tr.insertCell(-1);
-// 				td.innerHTML = data.results[i][col[j]];
-// 			}
-// 		}
-// 	}
-
-// 	// getPagination('#table-id');
-// }
-
-
-// function getPagination(table) {
-
-// 	$('.pagination').html('');
-// 	var trnum = 0;
-// 	var maxRows = 5;
-
-// 	var totalRows = $(table + ' tbody tr').length;
-
-// 	$(table + ' tr:gt(0)').each(function () {
-// 		trnum++;
-// 		if (trnum > maxRows) {
-
-// 			$(this).hide();
-// 		} if (trnum <= maxRows) { $(this).show(); }
-// 	});
-// 	if (totalRows > maxRows) {
-// 		var pagenum = Math.ceil(totalRows / maxRows);
-// 		//	numbers of pages 
-// 		for (var i = 1; i <= pagenum;) {
-// 			$('.pagination').append('<li class="page-item" data-page="' + i + '">\
-// 								      <span>'+ i++ + '<span class="sr-only page-link">(current)</span></span>\
-// 								    </li>').show();
-// 		}
-// 	}
-// 	$('.pagination li:first-child').addClass('active');
-
-
-// 	showing_rows_count(maxRows, 1, totalRows, table);
-
-// 	$('.pagination li').on('click', function (e) {
-// 		e.preventDefault();
-// 		var pageNum = $(this).attr('data-page');
-// 		var trIndex = 0;
-// 		$('.pagination li').removeClass('active');
-// 		$(this).addClass('active');
-
-// 		showing_rows_count(maxRows, pageNum, totalRows, table);
-
-// 		$(table + ' tr:gt(0)').each(function () {
-// 			trIndex++;
-// 			if (trIndex > (maxRows * pageNum) || trIndex <= ((maxRows * pageNum) - maxRows)) {
-// 				$(this).hide();
-// 			} else { $(this).show(); }
-// 		});
-// 	});
-
-// }
-
-// $(document).ready(function () {
-// 	$('#table-id').DataTable({
-// 		data: dataSet,
-// 		columns: [
-// 			{ title: "First Name"},
-// 			{ title: "Last Name"},
-// 			{ title: "Email"},
-// 			{ title: "Phone"},
-// 			{ title: "ID"},
-// 		],
-// 		"lengthChange": false,
-// 		"lengthMenu": [[5]],
-// 		"searching": false,
-// 		dom: 'l<"toolbar">frtip',
-// 	});
-// })
-
-// <!-- Script for the zero configuration data table on CDN at https://datatables.net/examples/basic_init/zero_configuration.html -->
-// <!-- <script>
-// 	$(document).ready(function () {
-// 		// used in the table
-// 		$('.table').DataTable({
-
-// 			// Code here is for displaying output 
-// 			"pagingType": "full_numbers",
-// 			"lengthMenu": [
-// 				[10, 25, 50, -1],
-// 				[10, 25, 50, "All"]
-// 			],
-// 			responsive: true,
-// 			language: {
-// 				search: "_INPUT_",
-// 				searchPlaceholder: "Search your data",
-// 			}
-
-// 		});
-// 	});
-// </script> -->
-
-//ROWS SHOWING FUNCTION
-// function showing_rows_count(maxRows, pageNum, totalRows, table) {
-// 	var end_index = maxRows * pageNum;
-// 	var start_index = ((maxRows * pageNum) - maxRows) + parseFloat(1);
-// 	if (totalRows == 1) {
-// 		var flag = $(table + " tr:gt(0)").hasClass("no-contacts");
-// 		if (flag) {
-// 			$('.rows_count').html("");
-// 			return;
-// 		}
-// 	}
-// 	if (end_index > totalRows) {
-// 		end_index = totalRows;
-// 	}
-// 	var string = 'Showing ' + start_index + ' to ' + end_index + ' of ' + totalRows + ' entries';
-// 	$('.rows_count').html(string);
-// }
-
-// const input = document.getElementById("search-input");
-// const searchBtn = document.getElementById("search-btn");
-
-// const expand = () => {
-//   searchBtn.classList.toggle("close");
-//   input.classList.toggle("square");
-// };
-
-// searchBtn.addEventListener("click", expand);

@@ -5,18 +5,11 @@ body {
   background-size: cover;
   background-position: center;
   font-family: sans-serif;
-  /* below is for spliced text */
-  /*
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden; */
 }
 
 .searchbox {
-  width: 1000px;
-  height: 500px;
+  width: 75%;
+  height: auto;
   background: rgba(0, 0, 0, 0.25);
   color: #fff;
   top: 50%;
@@ -24,25 +17,20 @@ body {
   position: absolute;
   transform: translate(-50%, -50%);
   box-sizing: border-box;
-  padding: 80px 30px;
+  padding: 30px 30px;
 }
 
-#form1 {
+#userName {
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+}
+
+/* search box transparency */
+#searchInput {
   background-color: rgba(255, 255, 255, 0);
 }
 
 /* css for spliced text */
-/*
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #000;
-  overflow: hidden;
-}
-*/
-
 .spliceText {
   display: flex;
   justify-content: center;
@@ -52,7 +40,7 @@ body {
 }
 
 h3 {
-  position: relative;
+  /* position: relative; */
   font-family: "Montserrat", Arial, sans-serif;
   font-size: calc(15px + 2vw);
   font-weight: 700;
@@ -159,12 +147,12 @@ h3::after {
   }
 }
 
-/* button for datatable search button*/
+/* button for datatable search button */
 .toolbar {
   float: left;
 }
 
-/* acticve page color */
+/* active page color */
 .page-item.active .page-link {
   background-color: white !important;
   border: 1px solid black;
@@ -178,3 +166,7 @@ h3::after {
 .page-link {
   color: darkgray !important;
 }
+
+/* thead, th, tbody, td {
+  text-align: center;
+} */
