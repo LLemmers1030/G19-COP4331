@@ -14,9 +14,9 @@ $('button[data-bs-dismiss="modal"]').click(function () {
 	$(this).closest('.modal').modal('hide');
 });
 
-// load all contacts when page first loads
+// prevent loading all contacts when page loads
 $(document).ready(function() {
-	searchContact();
+	showTable([]);
 });
 
 function doLogin() { // working
@@ -215,6 +215,12 @@ function searchContact() { // working
 
 	search = document.getElementById("searchInput").value;
 
+	// prevent loading all contacts when search is empty string
+	if (search == "" || search == null) {
+		showTable([]);
+		return;
+	}
+
 	document.getElementById("searchResult").innerHTML = "";
 
 	var url = urlBase + '/SearchContact.' + extension;
@@ -379,7 +385,12 @@ function showTable(dataSet) {
 				"data": null,
 				"defaultContent": '<button class="btn btn-light me-2 edtBtn"><i class="fas fa-user-edit"></i></button>'
 									+ '<button class="btn btn-light delBtn"><i class="fas fa-trash-alt"></i></button>'
-			}],
+			},
+			// {
+			// 	"targets": [ 4 ],
+			// 	"visible": false
+			// }
+			],
 			destroy: true,
 			aaData: Response.data,
 			"lengthChange": false,
@@ -387,6 +398,8 @@ function showTable(dataSet) {
 			"searching": false,
 			dom: 'l<"toolbar">frtip',
 		});
+
+		table.column(4).visible(false);
 }
 
 $('#table-id').on('click', '.edtBtn', function () {
