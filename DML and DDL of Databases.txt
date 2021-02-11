@@ -1,0 +1,41 @@
+DML of Ninjas Table
+CREATE TABLE `Ninjas` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `DateLastLoggedIn` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `FirstName` varchar(50) NOT NULL DEFAULT '',
+  `LastName` varchar(50) NOT NULL DEFAULT '',
+  `Login` varchar(50) NOT NULL DEFAULT '',
+  `Password` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
+
+
+
+DML OF Contacts Table
+
+CREATE TABLE `Contacts` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `AdderID` int DEFAULT NULL,
+  `FirstName` varchar(50) NOT NULL DEFAULT '',
+  `LastName` varchar(50) NOT NULL DEFAULT '',
+  `Email` varchar(50) NOT NULL DEFAULT '',
+  `Phone` varchar(50) NOT NULL DEFAULT '',
+  `DateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`),
+  KEY `AdderID` (`AdderID`),
+  CONSTRAINT `Contacts_ibfk_1` FOREIGN KEY (`AdderID`) REFERENCES `Ninjas` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
+
+
+DML of Ninjas
+insert into Ninjas (FirstName, LastName, Login, Password) VALUES ('LJL', 'Lemmers', 'LLem', 'COP4331');
+
+
+
+DML of Contacts
+insert into Contacts (FirstName, LastName, Email, Phone) VALUES ('LJ', 'Lemmers','test@gmail.com','111-123-1234');
+SELECT * from Contacts;
+
+ALTER TABLE Contacts
+ADD FOREIGN KEY (AdderID) REFERENCES Ninjas(ID);
