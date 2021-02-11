@@ -385,20 +385,19 @@ function showTable(dataSet) {
 				"data": null,
 				"defaultContent": '<button class="btn btn-light me-2 edtBtn"><i class="fas fa-user-edit"></i></button>'
 									+ '<button class="btn btn-light delBtn"><i class="fas fa-trash-alt"></i></button>'
-			},
-			// {
-			// 	"targets": [ 4 ],
-			// 	"visible": false
-			// }
-			],
+			}],
 			destroy: true,
 			aaData: Response.data,
 			"lengthChange": false,
 			"lengthMenu": [[5]],
 			"searching": false,
 			dom: 'l<"toolbar">frtip',
+			"language": {
+				"emptyTable": "Refine search criteria to show contacts"
+			}
 		});
 
+		// hide ID column
 		table.column(4).visible(false);
 }
 
