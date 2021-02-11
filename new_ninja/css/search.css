@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: url(/images/tea.jpg) no-repeat center center fixed;
+  background: url(/images/temple.jpg) no-repeat center center fixed;
   background-size: cover;
   background-position: center;
   font-family: sans-serif;
@@ -22,7 +22,7 @@ body {
 
 #userName {
   color: #fff;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 /* search box transparency */
