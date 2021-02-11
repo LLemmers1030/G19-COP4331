@@ -48,18 +48,25 @@
 
         <!-- Search bar and add contact form -->
         <div class="container">
-            <div class="header_wrap mb-3">
-                <button id="enter-press" type="button" class="btn btn-dark" data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop">
-                    <i class="fas fa-user-ninja"></i>
-                    Add Contact
-                </button>
-                <div class="tb_search float-end">
+            <div class="header_wrap mb-2 d-flex">
+                <div class="me-auto p-2">
+                    <button id="enter-press" type="button" class="btn btn-dark" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        <i class="fas fa-user-ninja"></i>
+                        Add Contact
+                    </button>
+                </div>
+                <div class="p-2">
                     <div class="form-outline">
-                        <input type="search" id="searchInput" class="form-control" onkeyup="searchContact()" />
+                        <input type="search" id="searchInput" class="form-control" />
                         <label class="form-label" for="searchInput">Search</label>
                     </div>
-
+                </div>
+                <div class="p-2">
+                    <button id="showBtn" type="button" class="btn btn-dark" onclick="showAll();">
+                        <i class="fas fa-eye"></i>
+                        SHOW ALL
+                    </button>
                 </div>
             </div>
 

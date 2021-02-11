@@ -8,7 +8,7 @@ var lastName = "";
 
 var globalData;
 var table;
-var search;
+var search = document.getElementById("searchInput").value;
 
 $('button[data-bs-dismiss="modal"]').click(function () {
 	$(this).closest('.modal').modal('hide');
@@ -17,7 +17,20 @@ $('button[data-bs-dismiss="modal"]').click(function () {
 // prevent loading all contacts when page loads
 $(document).ready(function() {
 	showTable([]);
+	$("#showBtn").click(function() {
+		searchContact("");
+	});
 });
+
+// get search input, create empty table if empty search
+$("#searchInput").keyup(function () {
+	search = this.value;
+	if (search == "" || search == null) {
+		showTable([]);
+		return;
+	}
+	searchContact(search);
+})
 
 function doLogin() { // working
 
@@ -202,8 +215,8 @@ function addContact() { // working
 			document.getElementById("addEmail").value = "";
 			document.getElementById("addPhone").value = "";
 
-			search = "";
-			searchContact();
+			//search = "";
+			searchContact(search);
 
 		})
 		.catch((err) => {
@@ -211,15 +224,15 @@ function addContact() { // working
 		});
 }
 
-function searchContact() { // working
+function searchContact(search) { // working
 
-	search = document.getElementById("searchInput").value;
+	//search = document.getElementById("searchInput").value;
 
 	// prevent loading all contacts when search is empty string
-	if (search == "" || search == null) {
-		showTable([]);
-		return;
-	}
+	// if (search == "" || search == null) {
+	// 	showTable([]);
+	// 	return;
+	// }
 
 	document.getElementById("searchResult").innerHTML = "";
 
@@ -285,8 +298,8 @@ function updateContact() { // working
 				return;
 			}
 
-			search = "";
-			searchContact();
+			//search = "";
+			searchContact(search);
 
 		})
 		.catch((err) => {
@@ -325,8 +338,8 @@ function removeContact() { // working
 				return;
 			}
 
-			search = "";
-			searchContact();
+			//search = "";
+			searchContact(search);
 
 		})
 		.catch((err) => {
@@ -349,13 +362,6 @@ function createDataSet(data) {
 			{
 				col.push(key);
 			}
-
-			// psuedo code
-			// if (index i + 1 == 5)
-			// 	we create the button for edit 
-
-			// if (index i + 2 == 6)
-			// 	we create the button for delete
 		}
 	}
 
@@ -404,7 +410,7 @@ function showTable(dataSet) {
 $('#table-id').on('click', '.edtBtn', function () {
 	$('#editmodal').modal('show');
 	var row_data = table.row($(this).closest('tr')).data();
-	var contactID = row_data[4]; // change for ID to be first col
+	var contactID = row_data[4]; 
 	$('.modal-body #update_id').val(contactID);
 
 	$('#updateFirst').val(row_data[0]);
@@ -416,6 +422,7 @@ $('#table-id').on('click', '.edtBtn', function () {
 $('#table-id').on('click', '.delBtn', function () {
 	$('#deletemodal').modal('show');
 	var row_data = table.row($(this).closest('tr')).data();
-	var contactID = row_data[4]; // change for ID to be first col
+	var contactID = row_data[4]; 
 	$('.modal-body #delete_id').val(contactID);
 })
+
