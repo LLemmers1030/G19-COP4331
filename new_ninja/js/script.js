@@ -211,8 +211,9 @@ function addContact() {
 			document.getElementById("addEmail").value = "";
 			document.getElementById("addPhone").value = "";
 
-			search = "";
-			searchContact(search);
+			if (search != null && search != "") {
+				searchContact(search);
+			}
 
 		})
 		.catch((err) => {
@@ -382,7 +383,7 @@ function showTable(dataSet) {
 		"searching": false,
 		dom: 'l<"toolbar">frtip',
 		"language": {
-			"emptyTable": "Please refine your search, add a new contact, or click SHOW ALL to view all of your contacts"
+			"emptyTable": "Please refine your search or click SHOW ALL to view all contacts"
 		}
 	});
 
