@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: url(/images/temple.jpg) no-repeat center center fixed;
+  background: url(/images/pink.jpg) no-repeat center center fixed;
   background-size: cover;
   background-position: center;
   font-family: sans-serif;
@@ -28,6 +28,7 @@ body {
 /* search box transparency */
 #searchInput {
   background-color: rgba(255, 255, 255, 0);
+  color: white;
 }
 
 /* css for spliced text */
