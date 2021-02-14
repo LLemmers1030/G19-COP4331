@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
+    <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/search.css">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" type="text/css" href="css/search.css"> -->
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.2.0/mdb.min.css" rel="stylesheet" />
     <!-- Utilizes data tables from CDN at https://cdn.datatables.net/-->
@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
 
     <title>Contact Manager</title>
+    <link rel="icon" href="images/ninja.png">
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
@@ -31,7 +32,7 @@
     <!-- Logout button -->
     <div class="me-3 mt-3">
         <div class="float-end">
-            <span id="userName" class="me-1"></span>
+            <span id="userName" class="rounded me-1"></span>
             <button id="search-button" type="button" class="btn btn-light rounded" onclick="doLogout();">
                 <i class="fas fa-sign-out-alt"></i>
                 Logout
@@ -70,74 +71,16 @@
                 </div>
             </div>
 
-            <span id="searchResult"></span>
+            <span hidden id="searchResult"></span>
 
             <table id="table-id" class="table table-dark" style="width: 100%;">
-                <!-- <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Manage</th>
-                    </tr>
-                </thead>
-                <tbody id="table-data">
-                    <tr>
-                        <td>Thor Walton</td>
-                        <td>Developer</td>
-                        <td>New York</td>
-                        <td>61</td>
-                        <td>2013/08/11</td>
-                    </tr>
-                    <tr>
-                        <td>Finn Camacho</td>
-                        <td>Support Engineer</td>
-                        <td>San Francisco</td>
-                        <td>47</td>
-                        <td>2009/07/07</td>
-                    </tr>
-                    <tr>
-                        <td>Finn Camacho</td>
-                        <td>Support Engineer</td>
-                        <td>San Francisco</td>
-                        <td>47</td>
-                        <td>2009/07/07</td>
-                    </tr>
-                    <tr>
-                        <td>Finn Camacho</td>
-                        <td>Support Engineer</td>
-                        <td>San Francisco</td>
-                        <td>47</td>
-                        <td>2009/07/07</td>
-                    </tr>
-                    <tr>
-                        <td>Serge Baldwin</td>
-                        <td>Data Coordinator</td>
-                        <td>Singapore</td>
-                        <td>64</td>
-                        <td>2012/04/09</td>
-                    </tr>
-                    <tr>
-                        <td>Zenaida Frank</td>
-                        <td>Software Engineer</td>
-                        <td>New York</td>
-                        <td>63</td>
-                        <td>2010/01/04</td>
-                    </tr>
-                    <tr>
-                        <td>Zorita Serrano</td>
-                        <td>Software Engineer</td>
-                        <td>San Francisco</td>
-                        <td>56</td>
-                        <td>2012/06/01</td>
-                    </tr>
-                </tbody> -->
+                <!-- Datatable is created in script.js -->
             </table>
 
             <div class='pagination-container'>
                 <nav>
                     <ul class="pagination">
+
                     </ul>
                 </nav>
             </div>
@@ -145,18 +88,6 @@
 
         </div>
     </section>
-
-
-    <!-- eventually move to script.js -->
-    <!-- <script>
-
-        document.getElementById("searchInput").onkeypress = function (e) {
-            if (e.keyCode == 13) {
-                document.getElementById('search-button1').onclick();
-            }
-        }
-
-    </script> -->
 
 
     <!-- ################################################################################################################################################ -->
@@ -168,46 +99,29 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Delete contact Data</h5>
-                    <!-- <button type="button" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button> -->
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Contact Data</h5>
                 </div>
 
-                <!-- Will write the update -->
                 <form>
                     <div class="modal-body">
+                        <input type="hidden" name="delete_id" id="delete_id"/>
 
-                        <!-- Allows for the javascript edit to work -->
-                        <!-- Notice the added id fields in the input tags -->
-                        <input type="hidden" name="delete_id" id="delete_id">
-
-                        <h4>Do you want to delete this data?</h4>
+                        <h4 id="delMessage"></h4>
 
                     </div>
                     <div class="modal-footer">
                         <span hidden type="text" name="contactID" id="contactID"></span>
                         <button id="deleteBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">No (Do
                             not delete)</button>
-                        <!-- This button should take you to deletecode.php -->
                         <button type="button" name="deletedata" class="btn btn-primary" onclick="removeContact();"
                             data-bs-dismiss="modal">Yes (Do delete)</button>
-                        <span id="deleteResult"></span>
+                        <span hidden id="deleteResult"></span>
                     </div>
                 </form>
 
             </div>
         </div>
     </div>
-
-    <!-- Test for deletion -->
-    <!-- <script>
-        // Get the button that opens the modal
-        var btn = document.getElementById("mydeleteBtn");
-
-        // When the user clicks the button, open the modal 
-        btn.onclick = function () {
-            modal.style.display = "block";
-        }
-    </script> -->
 
     <!-- ################################################################################################################################################ -->
 
@@ -218,17 +132,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit contact Data</h5>
-                    <!-- <button type="button" class="btn-close" data-bs-toggle="modal" aria-label="Close"></button> -->
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Contact Data</h5>
                 </div>
 
-                <!-- Will write the update -->
                 <form>
-                    <!-- <form action="updatecode.php" method="POST"> -->
                     <div class="modal-body">
-
-                        <!-- Allows for the javascript edit to work -->
-                        <!-- Notice the added id fields in the input tags -->
                         <input type="hidden" name="update_id" id="update_id">
 
                         <div class="mb-3">
@@ -242,13 +150,11 @@
                             <input type="text" name="lname" id="updateLast" class="form-control"
                                 placeholder="Enter last name">
                         </div>
-                        <!-- had form-check inside the class before. may or may not need -->
                         <div class="mb-3">
                             <label>Email</label>
                             <input type="text" name="course" id="updateEmail" class="form-control"
                                 placeholder="Enter Email">
                         </div>
-                        <!-- same witht the form-check -->
                         <div class="mb-3">
                             <label>Phone Number</label>
                             <input type="text" name="contact" id="updatePhone" class="form-control"
@@ -260,7 +166,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="button" name="updatedata" class="btn btn-primary" onclick="updateContact();"
                             data-bs-dismiss="modal">Update Contact</button>
-                        <span id="updateResult"></span>
+                        <span hidden id="updateResult"></span>
                     </div>
                 </form>
 
@@ -271,7 +177,7 @@
     <!-- ################################################################################################################################################ -->
 
 
-    <!-- Modal -->
+    <!-- Modal for Add Contact -->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered rounded">
@@ -288,28 +194,22 @@
                             <div class="row text-black g-4 mx-auto ">
 
                                 <div class="form-group md-6">
-                                    <!-- <label for="first-name">First Name</label> -->
                                     <input type="text" class="form-control" id="addFirst" placeholder="First Name">
                                 </div>
                                 <div class="form-group md-6">
-                                    <!-- <label for="last-name">Last Name</label> -->
                                     <input type="text" class="form-control" id="addLast" placeholder="Last Name">
                                 </div>
 
                                 <div class="form-group md-6">
-                                    <!-- <label for="exampleInputEmail1" class="form-label">Email</label> -->
                                     <input type="email" class="form-control" id="addEmail" aria-describedby="emailHelp"
                                         placeholder="Email">
                                 </div>
                                 <div class="form-group md-6">
-                                    <!-- <label for="exampleInputPhoneNumber1" class="form-label">Phone Number</label> -->
                                     <input type="phone-modal" class="form-control" id="addPhone"
                                         placeholder="Phone Number">
                                 </div>
 
                             </div>
-                            <!-- Add show password in registration page -->
-                            <!-- <i class="bi bi-eye"></i> -->
                         </form>
                     </div>
                 </div>
@@ -321,8 +221,6 @@
             </div>
         </div>
     </div>
-
-
 
 
     <!-- Bootstrap Integration -->
@@ -347,7 +245,6 @@
 
     <!-- For our javascript files on the server -->
     <script type="text/javascript" src="js/script.js"></script>
-    <script type="text/javascript" src="js/md5.js"></script>
 
     <!-- Script for the pagination and search from CDN at https://cdn.datatables.net/ -->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>

@@ -22,7 +22,11 @@ body {
 
 #userName {
   color: #fff;
+  background: rgba(0, 0, 0, 0.25); 
+  padding: 10px;
   font-family: "Raleway", sans-serif;
+  position: relative;
+  top: 2px;
 }
 
 /* search box transparency */
@@ -157,6 +161,7 @@ h3::after {
 .page-item.active .page-link {
   background-color: white !important;
   border: 1px solid black;
+  color: black !important;
 }
 /* background color */
 .page-item .page-link {
@@ -165,9 +170,5 @@ h3::after {
 }
 /* inside text color */
 .page-link {
-  color: darkgray !important;
+  color: white !important;
 }
-
-/* thead, th, tbody, td {
-  text-align: center;
-} */
