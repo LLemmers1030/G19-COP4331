@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 var urlBase = '/LAMPAPI';
 var extension = 'php';
@@ -420,7 +419,6 @@ $('#table-id').on('click', '.delBtn', function () {
 	var contactID = row_data[4]; // change for ID to be first col
 	$('.modal-body #delete_id').val(contactID);
 })
-=======
 
 var urlBase = '/LAMPAPI';
 var extension = 'php';
