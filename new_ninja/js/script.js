@@ -468,10 +468,10 @@ function doLogin() { // working
 		.then(data => {
 			userId = data.id;
 
-			if (userId < 1 || userId == null) {
+			/*if (userId < 1 || userId == null) {
 				document.getElementById("loginResult").innerHTML = "Invalid User/Password combination";
 				return;
-			}
+			}*/
 
 			firstName = data.firstName;
 			lastName = data.lastName;
